@@ -1,0 +1,29 @@
+logging:
+    level:
+        guru:
+            springframework:
+                controllers: ERROR
+        org:
+            springframework: ERROR
+server:
+    port: 8080
+    servlet:
+        contextPath: /api/v1
+spring:
+    application:
+        name: App Sales v2
+    config:
+        activate:
+            onProfile: ${SPRING_PROFILES_ACTIVE:test}
+    mvc:
+        pathmatch:
+            matchingStrategy: ANT_PATH_MATCHER
+    security:
+        oauth2:
+            client:
+                registration:
+                    jwtDuration: ${JWT_DURATION:86400}
+                    jwtSecret: ${JWT_SECRET:my-jwt-secret}
+                    uaa:
+                        clientId: ${CLIENT_ID:my-client-id}
+                        clientSecret: ${CLIENT_SECRET:my-client-secret}
