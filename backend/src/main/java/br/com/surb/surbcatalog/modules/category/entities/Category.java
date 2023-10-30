@@ -1,19 +1,30 @@
 package br.com.surb.surbcatalog.modules.category.entities;
 
 import jakarta.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_category")
 public class Category implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 5188743431161409951L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID categoryId;
   private String name;
+
+  @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+  private Instant createdAt;
+
+  @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+  private Instant updatedAt;
+  private boolean active;
 
   public Category() {
   }
@@ -37,6 +48,38 @@ public class Category implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
+  @PrePersist
+  public void prePersist(){
+    createdAt = Instant.now();
+    if(Objects.isNull(categoryId)) {
+      categoryId = UUID.randomUUID();
+    }
+    if(Objects.isNull(active)) {
+      active = true;
+    }
+  }
+
+  @PreUpdate
+  public void preUpdate(){
+    updatedAt = Instant.now();
   }
 
   @Override
