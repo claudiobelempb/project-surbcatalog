@@ -1,15 +1,15 @@
 package br.com.surb.surbcatalog.shared.AppValidator;
 
 
-import br.com.surb.sale.shared.AppValidator.AppValidateError;
+
 import org.springframework.data.util.Streamable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class AppValidateErrors implements Streamable<br.com.surb.sale.shared.AppValidator.AppValidateError> {
+public class AppValidateErrors implements Streamable<AppValidateError> {
 
-  private final List<br.com.surb.sale.shared.AppValidator.AppValidateError> validationErrors;
+  private final List<AppValidateError> validationErrors;
 
   public AppValidateErrors() {
     this.validationErrors = new ArrayList<>();

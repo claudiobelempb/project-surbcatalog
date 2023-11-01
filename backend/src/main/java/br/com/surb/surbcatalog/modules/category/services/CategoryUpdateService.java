@@ -5,24 +5,28 @@ import br.com.surb.surbcatalog.modules.category.entities.Category;
 import br.com.surb.surbcatalog.modules.category.repositories.CategoryRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
 import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CategoryFindByService {
-
+public class CategoryUpdateService {
   private final CategoryRepository categoryRepository;
 
-  public CategoryFindByService(CategoryRepository categoryRepository) {
+  public CategoryUpdateService(CategoryRepository categoryRepository) {
     this.categoryRepository = categoryRepository;
   }
 
-  @Transactional(readOnly = true)
-  public CategoryDTO execute(UUID categoryId){
-    Optional<Category> obj = categoryRepository.findById(categoryId);
-    Category entity = obj.orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.NOT_FOUND + categoryId));
-    return new CategoryDTO(entity);
+  @Transactional
+  public CategoryDTO execute(UUID categoryId, CategoryDTO categoryDTO){
+    try{
+      Category entity = categoryRepository.getReferenceById(categoryId);
+      entity.setName(categoryDTO.getName());
+      entity = categoryRepository.save(entity);
+      return new CategoryDTO(entity);
+    }catch (EntityNotFoundException e) {
+      throw new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + categoryId);
+    }
   }
 }

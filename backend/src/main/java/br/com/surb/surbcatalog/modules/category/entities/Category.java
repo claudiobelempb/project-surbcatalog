@@ -72,9 +72,7 @@ public class Category implements Serializable {
     if(Objects.isNull(categoryId)) {
       categoryId = UUID.randomUUID();
     }
-    if(Objects.isNull(active)) {
-      active = true;
-    }
+    active = true;
   }
 
   @PreUpdate
