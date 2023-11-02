@@ -69,7 +69,6 @@ public class Category implements Serializable {
   @PrePersist
   public void prePersist(){
     createdAt = Instant.now();
-    categoryId = UUID.randomUUID();
     active = true;
   }
 
