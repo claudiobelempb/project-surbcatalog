@@ -3,7 +3,7 @@ package br.com.surb.surbcatalog.shared.AppValidator;
 import java.util.Objects;
 
 
-public class AppValidateError {
+public final class AppValidError {
   private final String field;
   private final String errorCode;
 
@@ -15,7 +15,7 @@ public class AppValidateError {
     return errorCode;
   }
 
-  public AppValidateError(String field, String errorCode) {
+  public AppValidError(String field, String errorCode) {
     this.field = field;
     this.errorCode = errorCode;
   }
@@ -24,7 +24,7 @@ public class AppValidateError {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    AppValidateError that = (AppValidateError) o;
+    AppValidError that = (AppValidError) o;
     return field.equals(that.field) && errorCode.equals(that.errorCode);
   }
 

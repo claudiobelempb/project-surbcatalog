@@ -1,18 +1,24 @@
 package br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService;
 
 
-import br.com.surb.surbcatalog.shared.AppValidator.AppValidateErrors;
+import br.com.surb.surbcatalog.shared.AppValidator.AppValidationErrors;
 
 public class AppInvalidRequestException extends RuntimeException {
 
-  private final AppValidateErrors validationErrors;
+  private final AppValidationErrors validationErrors;
 
-  public AppInvalidRequestException(AppValidateErrors validationErrors) {
-    super(validationErrors.toString());
-    this.validationErrors = validationErrors;
+  public AppInvalidRequestException(AppValidationErrors appValidateErrors) {
+    super(appValidateErrors.toString());
+    this.validationErrors = appValidateErrors;
   }
 
-  public AppValidateErrors getValidateErrors() {
-    return validationErrors;
+  public AppValidationErrors getValidationErrors(){
+    return this.validationErrors;
   }
+
+  public AppInvalidRequestException(String msg, AppValidationErrors appValidateErrors){
+    super(msg);
+    this.validationErrors = appValidateErrors;
+  }
+
 }

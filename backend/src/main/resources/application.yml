@@ -20,3 +20,10 @@ spring:
                     uaa:
                         clientId: ${CLIENT_ID:my-client-id}
                         clientSecret: ${CLIENT_SECRET:my-client-secret}
+# =================================
+# = Logging
+# =================================
+logging:
+    level:
+        org.springframework: ERROR
+        org.flywaydb: ERROR

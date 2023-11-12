@@ -6,9 +6,14 @@ public class AppFieldMessage {
 
   public AppFieldMessage(){}
 
-  public AppFieldMessage(String fieldName, String message) {
+  public AppFieldMessage(String field, String fieldName,String message) {
     super();
     this.fieldName = fieldName;
+    this.message = message;
+  }
+
+  public AppFieldMessage(String message) {
+    super();
     this.message = message;
   }
 
@@ -27,4 +32,5 @@ public class AppFieldMessage {
   public void setMessage(String message) {
     this.message = message;
   }
+
 }
