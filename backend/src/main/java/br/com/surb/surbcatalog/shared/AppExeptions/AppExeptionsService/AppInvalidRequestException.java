@@ -1,6 +1,7 @@
 package br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService;
 
 
+import br.com.surb.surbcatalog.shared.AppValidator.AppValidError;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidationErrors;
 
 public class AppInvalidRequestException extends RuntimeException {
@@ -10,6 +11,10 @@ public class AppInvalidRequestException extends RuntimeException {
   public AppInvalidRequestException(AppValidationErrors appValidateErrors) {
     super(appValidateErrors.toString());
     this.validationErrors = appValidateErrors;
+  }
+
+  public AppInvalidRequestException(AppValidError appValidError) {
+    this(new AppValidationErrors().addErrors(appValidError));
   }
 
   public AppValidationErrors getValidationErrors(){

@@ -57,37 +57,37 @@ public final class AppValidatorUtils {
     /*Valid*/
     public static void validateRequiredValid(String field, String fieldName, AppValidationErrors validationErrors){
         if(StringUtils.isBlank(field)){
-            validationErrors.addErrors(field, fieldName + AppValidatorConstants.REQUIRED_FIELD);
+            validationErrors.addErrors(fieldName, AppValidatorConstants.REQUIRED_FIELD);
         }
     }
 
     public static void validateRequiredValid(Object field, String fieldName, AppValidationErrors appValidateErrors){
         if(Objects.isNull(field)){
-            appValidateErrors.addErrors(fieldName, fieldName +   AppValidatorConstants.REQUIRED_FIELD);
+            appValidateErrors.addErrors(fieldName,  AppValidatorConstants.REQUIRED_FIELD);
         }
     }
 
     public static void validateMaxLengthValid(String field, String fieldName,  int maxLength, AppValidationErrors appValidateErrors){
         if(!StringUtils.isBlank(field) && field.trim().length() > maxLength){
-            appValidateErrors.addErrors(field, fieldName +  AppValidatorConstants.MAX + maxLength + " caracteres");
+            appValidateErrors.addErrors(fieldName,   AppValidatorConstants.MAX + maxLength + " caracteres");
         }
     }
 
     public static void validateMinLengthValid(String field, String fieldName, int minLength, AppValidationErrors appValidateErrors){
         if(!StringUtils.isBlank(field) && field.trim().length() < minLength){
-            appValidateErrors.addErrors(field, fieldName + AppValidatorConstants.MIN + minLength + " caracteres");
+            appValidateErrors.addErrors(fieldName, AppValidatorConstants.MIN + minLength + " caracteres");
         }
     }
 
     public static void validateMaxValueValid(Integer field, String fieldName, Integer maxValue, AppValidationErrors appValidateErrors){
         if(!Objects.isNull(field) && field > maxValue){
-            appValidateErrors.addErrors(fieldName, AppValidatorConstants.MAX + maxValue);
+            appValidateErrors.addErrors(fieldName, AppValidatorConstants.REQUIRED_NUMBER);
         }
     }
 
     public static void validateMinValueValid(Integer field, String fieldName, int minValue, AppValidationErrors appValidateErrors){
         if(!Objects.isNull(field) && field < minValue){
-            appValidateErrors.addErrors(fieldName,AppValidatorConstants.MIN + minValue);
+            appValidateErrors.addErrors(fieldName,AppValidatorConstants.REQUIRED_NUMBER);
         }
     }
 }
