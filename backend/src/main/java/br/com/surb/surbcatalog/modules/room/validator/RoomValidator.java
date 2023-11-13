@@ -8,6 +8,7 @@ import br.com.surb.surbcatalog.shared.AppUtils.AppValidatorUtils;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidError;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidationError;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidationErrors;
+import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,24 +23,28 @@ public class RoomValidator {
     public void validate(RoomDTO roomDTO){
         AppValidationErrors appValidateErrors = new AppValidationErrors();
 
-        //Room name
-        AppValidatorUtils.validateRequiredValid(roomDTO.getName(), "name", appValidateErrors);
-        AppValidatorUtils.validateMaxLengthValid(roomDTO.getName(), "name", 20, appValidateErrors);
-        AppValidatorUtils.validateMinLengthValid(roomDTO.getName(), "name", 5, appValidateErrors);
-
-        //Room seats
-        AppValidatorUtils.validateRequiredValid(roomDTO.getSeats(), "seats", appValidateErrors);
-        AppValidatorUtils.validateMaxValueValid(roomDTO.getSeats(), "seats", 20, appValidateErrors);
-        AppValidatorUtils.validateMinValueValid(roomDTO.getSeats(), "seats", 1, appValidateErrors);
+        validateName(roomDTO.getName(), appValidateErrors);
+        validateSeats(roomDTO.getSeats(), appValidateErrors);
+        validateNameDuplicate(roomDTO.getName(), appValidateErrors);
 
         AppValidatorUtils.throwOnError(appValidateErrors);
-
-        validateNameDuplicate(roomDTO.getName());
     }
 
-    private void validateNameDuplicate(String name){
-        roomRepository.findByNameAndActive(name, true).ifPresent(__ -> {
-            throw new AppInvalidRequestException(new AppValidError("name", AppValidatorConstants.REQUIRED_NAME_EXIST));
-        });
+    private static void validateName(String name, AppValidationErrors appValidateErrors) {
+        AppValidatorUtils.validateRequiredValid(name, "name", appValidateErrors);
+        AppValidatorUtils.validateMaxLengthValid(name, "name", 20, appValidateErrors);
+        AppValidatorUtils.validateMinLengthValid(name, "name", 5, appValidateErrors);
+    }
+
+    private static void validateSeats(Integer value, AppValidationErrors appValidateErrors) {
+        AppValidatorUtils.validateRequiredValid(value, "seats", appValidateErrors);
+        AppValidatorUtils.validateMaxValueValid(value, "seats", 20, appValidateErrors);
+        AppValidatorUtils.validateMinValueValid(value, "seats", 1, appValidateErrors);
+    }
+
+    private void validateNameDuplicate(String name, AppValidationErrors appValidationErrors){
+        roomRepository
+                .findByNameAndActive(name, true)
+                .ifPresent(__ -> appValidationErrors.addErrors("name", AppValidatorConstants.REQUIRED_NAME_EXIST));
     }
 }
