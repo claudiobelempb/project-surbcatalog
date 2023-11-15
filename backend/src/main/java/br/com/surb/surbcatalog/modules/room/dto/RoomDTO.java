@@ -1,7 +1,6 @@
 package br.com.surb.surbcatalog.modules.room.dto;
 
 import br.com.surb.surbcatalog.modules.room.entities.Room;
-import br.com.surb.surbcatalog.modules.room.validator.RoomCreateValid;
 
 import java.io.Serial;
 import java.io.Serializable;

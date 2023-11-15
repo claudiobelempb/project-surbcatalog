@@ -28,12 +28,12 @@ public class RoomCreateValidator implements ConstraintValidator<RoomCreateValid,
         /*if(StringUtils.isBlank(roomDTO.getName())){
             appFieldMessages.add(new AppFieldMessage("name", AppValidatorConstants.REQUIRED_FIELD));
         }*/
-        AppValidatorUtils.validateRequired(roomDTO.getName(), "name", appFieldMessages);
-        AppValidatorUtils.validateMaxLength(roomDTO.getName(), "name", 20, appFieldMessages);
-        AppValidatorUtils.validateMinLength(roomDTO.getName(), "name", 5, appFieldMessages);
+        //AppValidatorUtils.validateRequired(roomDTO.getName(), "name", appFieldMessages);
+        //AppValidatorUtils.validateMaxLength(roomDTO.getName(), "name", 20, appFieldMessages);
+        //AppValidatorUtils.validateMinLength(roomDTO.getName(), "name", 5, appFieldMessages);
 
         //Room Seats
-        AppValidatorUtils.validateRequired(String.valueOf(roomDTO.getSeats()), "seats", appFieldMessages);
+        //AppValidatorUtils.validateRequired(String.valueOf(roomDTO.getSeats()), "seats", appFieldMessages);
         //AppValidatorUtils.validateMaxValue(roomDTO.getSeats(), 20, appFieldMessages);
         //AppValidatorUtils.validateMinValue(roomDTO.getSeats(), 5, appFieldMessages);
 

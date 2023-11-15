@@ -22,13 +22,13 @@ public final class AppValidatorConstants {
   public static final String REQUIRED_PHONE = "Error: O campo Telefone deve conter apenas dígitos";
   public static final String REQUIRED_EMAIL = "Error: O endereço usado no campo Email não é um endereço de e-mail válido";
   public static final String REQUIRED_NUMBER = "Error: O campo aceitar apenas números positivo e não letras";
-  public static final String REQUIRED_EMAIL_EXIST = "Email já existe";
-  public static final String REQUIRED_NAME_EXIST = " Nome já existe";
-  public static final String REQUIRED_PRICE_POSITIVO = "Preço deve ser um valor positivo";
-  public static final String REQUIRED_DATA_PRESENT = "A data do produto não pode ser futura";
+  public static final String REQUIRED_EMAIL_EXIST = "Error: Email já existe";
+  public static final String REQUIRED_EXIST = "Error: Já existe em nossa base de dados";
+  public static final String REQUIRED_PRICE_POSITIVO = "Error: Preço deve ser um valor positivo";
+  public static final String REQUIRED_DATA_PRESENT = "Error: A data do produto não pode ser futura";
 
-  public static final String MAX = "Campo deve ser menor que";
-  public static final String MIN = "Campo deve ser maior que";
+  public static final String MAX = "Error: Campo deve ser menor que";
+  public static final String MIN = "Error: Campo deve ser maior que";
 
 
   private AppValidatorConstants(){}

@@ -1,5 +1,6 @@
 package br.com.surb.surbcatalog.modules.room.resources;
 
+import br.com.surb.surbcatalog.modules.room.dto.RoomCreateDTO;
 import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
 import br.com.surb.surbcatalog.modules.room.services.RoomCreateService;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class RoomCreateResource {
     }
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<RoomDTO>> handle(@Valid @RequestBody RoomDTO dto){
+    public CompletableFuture<ResponseEntity<RoomDTO>> handle(@Valid @RequestBody RoomCreateDTO dto){
         RoomDTO roomDTO = roomCreateService.execute(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{roomId}").buildAndExpand(roomDTO.getRoomId()).toUri();
         return supplyAsync(() -> roomDTO, controllersExecutor).thenApply((r) -> ResponseEntity.created(uri).body(roomDTO));

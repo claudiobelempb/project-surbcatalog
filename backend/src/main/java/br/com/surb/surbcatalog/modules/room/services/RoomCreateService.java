@@ -1,5 +1,6 @@
 package br.com.surb.surbcatalog.modules.room.services;
 
+import br.com.surb.surbcatalog.modules.room.dto.RoomCreateDTO;
 import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
 import br.com.surb.surbcatalog.modules.room.entities.Room;
 import br.com.surb.surbcatalog.modules.room.mapper.RoomMapper;
@@ -19,9 +20,9 @@ public class RoomCreateService {
     }
 
     @Transactional
-    public RoomDTO execute(RoomDTO roomDTO){
-        roomValidator.validate(roomDTO);
-        Room room = RoomMapper.copyCreateEntityToDto(roomDTO);
+    public RoomDTO execute(RoomCreateDTO dto){
+        roomValidator.validate(dto);
+        Room room = RoomMapper.copyCreateEntityToDto(dto);
         roomRepository.save(room);
         return RoomMapper.copyEntityToDto(room);
     }
