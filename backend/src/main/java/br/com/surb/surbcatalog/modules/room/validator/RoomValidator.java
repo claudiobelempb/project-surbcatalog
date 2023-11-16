@@ -1,11 +1,16 @@
 package br.com.surb.surbcatalog.modules.room.validator;
 
+import br.com.surb.surbcatalog.modules.room.dto.RoomCreateDTO;
 import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
+import br.com.surb.surbcatalog.modules.room.dto.RoomUpdateDTO;
 import br.com.surb.surbcatalog.modules.room.repositories.RoomRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppValidatorConstants;
 import br.com.surb.surbcatalog.shared.AppUtils.AppValidatorUtils;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidationErrors;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
+import java.util.UUID;
 
 @Component
 public class RoomValidator {
@@ -16,17 +21,27 @@ public class RoomValidator {
         this.roomRepository = roomRepository;
     }
 
-    public void validate(RoomDTO roomDTO){
+    public void validate(RoomCreateDTO roomDTO){
         AppValidationErrors appValidateErrors = new AppValidationErrors();
-
         if(
             validateName(roomDTO.getName(), appValidateErrors) &&
             validateSeats(roomDTO.getSeats(), appValidateErrors)
         ){
-            validateNameDuplicate(roomDTO.getName(), appValidateErrors);
+            validateNameDuplicate(null, roomDTO.getName(), appValidateErrors);
         }
 
+        AppValidatorUtils.throwOnError(appValidateErrors);
+    }
 
+    public void validate(UUID roomId, RoomUpdateDTO dto){
+        AppValidationErrors appValidateErrors = new AppValidationErrors();
+        if(
+            AppValidatorUtils.validateRequiredValid(roomId, "name", appValidateErrors) &&
+            validateName(dto.getName(), appValidateErrors) &&
+            validateSeats(dto.getSeats(), appValidateErrors)
+        ){
+            validateNameDuplicate(roomId, dto.getName(), appValidateErrors);
+        }
 
         AppValidatorUtils.throwOnError(appValidateErrors);
     }
@@ -47,9 +62,13 @@ public class RoomValidator {
         );
     }
 
-    private void validateNameDuplicate(String name, AppValidationErrors appValidationErrors){
+    private void validateNameDuplicate(UUID roomIdToExclude, String name, AppValidationErrors appValidationErrors){
         roomRepository
                 .findByNameAndActive(name, true)
-                .ifPresent(__ -> appValidationErrors.addErrors("name", AppValidatorConstants.REQUIRED_EXIST));
+                .ifPresent(room -> {
+                    if(!Objects.isNull(roomIdToExclude) && !Objects.equals(room.getRoomId(), roomIdToExclude)) {
+                        appValidationErrors.addErrors("name", AppValidatorConstants.REQUIRED_EXIST);
+                    }
+                });
     }
 }
