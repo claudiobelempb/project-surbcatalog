@@ -5,6 +5,7 @@ import br.com.surb.surbcatalog.modules.room.entities.Room;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 //@RoomCreateValid
@@ -18,13 +19,13 @@ public class RoomDTO implements Serializable {
     private Integer seats;
     private Boolean active;
 
-    private Instant createdAt;
+    private OffsetDateTime createdAt;
 
-    private Instant updatedAt;
+    private OffsetDateTime updatedAt;
 
     public RoomDTO(){}
 
-    public RoomDTO(UUID roomId, String name, Integer seats, Boolean active, Instant createdAt, Instant updatedAt) {
+    public RoomDTO(UUID roomId, String name, Integer seats, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.roomId = roomId;
         this.name = name;
         this.seats = seats;
@@ -74,19 +75,19 @@ public class RoomDTO implements Serializable {
         this.active = active;
     }
 
-    public Instant getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

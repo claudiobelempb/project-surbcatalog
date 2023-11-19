@@ -1,10 +1,12 @@
 package br.com.surb.surbcatalog.modules.room.entities;
 
+import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -27,15 +29,15 @@ public class Room implements Serializable {
     private Boolean active;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant createdAt;
+    private OffsetDateTime createdAt;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant updatedAt;
+    private OffsetDateTime updatedAt;
 
     public Room() {
     }
 
-    private Room(UUID roomId, String name, Integer seats, Boolean active, Instant createdAt, Instant updatedAt) {
+    private Room(UUID roomId, String name, Integer seats, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.roomId = roomId;
         this.name = name;
         this.seats = seats;
@@ -60,23 +62,24 @@ public class Room implements Serializable {
         return active;
     }
 
-    public Instant getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public Instant getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
     @PrePersist
     public void prePersist(){
-        createdAt = Instant.now();
+        createdAt = AppDateUtils.now();
+        updatedAt = createdAt;
         active = true;
     }
 
     @PreUpdate
     public void preUpdate(){
-        updatedAt = Instant.now();
+        updatedAt = AppDateUtils.now();
     }
 
     @Override
@@ -101,8 +104,8 @@ public class Room implements Serializable {
         private String name;
         private Integer seats;
         private Boolean active;
-        private Instant createdAt;
-        private Instant updatedAt;
+        private OffsetDateTime createdAt;
+        private OffsetDateTime updatedAt;
 
         private RoomBuilder() {
         }
@@ -127,12 +130,12 @@ public class Room implements Serializable {
             return this;
         }
 
-        public RoomBuilder createdAt(Instant createdAt) {
+        public RoomBuilder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public RoomBuilder updatedAt(Instant updatedAt) {
+        public RoomBuilder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

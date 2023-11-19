@@ -1,3 +1,6 @@
+--tb_user
+INSERT INTO tb_user (user_id, first_name, last_name, email) VALUES('84794b77-dd91-4050-9831-7de6007d103e', 'Alex', 'Brown', 'alex@gmail.com');
+
 --Insert tb_category
 INSERT INTO tb_category (category_id, name, created_at, active) VALUES ('e15b531f-d0cf-44fe-b6d5-ee4410a2d6f0', 'Books', now(), 1);
 INSERT INTO tb_category (category_id, name, created_at, active) VALUES ('edbab41d-80ce-4bec-a166-f129a6b295fc', 'Eletronics', now(), 1);
