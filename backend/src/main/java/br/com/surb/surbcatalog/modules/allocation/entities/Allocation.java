@@ -89,14 +89,14 @@ public class Allocation implements Serializable {
     }
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         createdAt = AppDateUtils.now();
         updatedAt = createdAt;
         active = true;
     }
 
     @PreUpdate
-    public void preUpdate(){
+    public void preUpdate() {
         updatedAt = AppDateUtils.now();
     }
 
@@ -201,7 +201,7 @@ public class Allocation implements Serializable {
         }
 
         public Allocation build() {
-           return new Allocation(this);
+            return new Allocation(this);
         }
     }
 }

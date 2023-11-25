@@ -3,8 +3,8 @@ package br.com.surb.surbcatalog.modules.allocation.services;
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationCreateDTO;
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationDTO;
 import br.com.surb.surbcatalog.modules.allocation.entities.Allocation;
-import br.com.surb.surbcatalog.modules.allocation.mapper.AllocationMapper;
 import br.com.surb.surbcatalog.modules.allocation.repositories.AllocationRepository;
+import br.com.surb.surbcatalog.modules.allocation.validator.AllocationValidator;
 import br.com.surb.surbcatalog.modules.room.entities.Room;
 import br.com.surb.surbcatalog.modules.room.repositories.RoomRepository;
 import br.com.surb.surbcatalog.modules.user.entities.User;
@@ -14,32 +14,36 @@ import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntity
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import static br.com.surb.surbcatalog.modules.allocation.mapper.AllocationMapper.fromCreateDTOToEntity;
+import static br.com.surb.surbcatalog.modules.allocation.mapper.AllocationMapper.fromEntityToDTO;
 
 @Service
 public class AllocationCreateService {
     private final AllocationRepository allocationRepository;
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
+    private final AllocationValidator allocationCreateValidator;
 
-    public AllocationCreateService(AllocationRepository allocationRepository, RoomRepository roomRepository, UserRepository userRepository) {
+    public AllocationCreateService(AllocationRepository allocationRepository, RoomRepository roomRepository, UserRepository userRepository, AllocationValidator allocationCreateValidator) {
         this.allocationRepository = allocationRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
+        this.allocationCreateValidator = allocationCreateValidator;
     }
 
     @Transactional
-    public AllocationCreateDTO execute(AllocationCreateDTO dto){
+    public AllocationDTO execute(AllocationCreateDTO dto) {
+
         Room room = roomRepository
                 .findById(dto.getRoomId())
-                .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + dto.getRoomId()));
+                .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "RoomId " + dto.getRoomId()));
         User user = userRepository
                 .findById(dto.getUserId())
-                .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + dto.getUserId()));
-        Allocation entity = AllocationMapper.copyEntity(dto, room, user);
-        System.out.println(entity);
+                .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "UserId " + dto.getUserId()));
 
+        allocationCreateValidator.validate(dto);
+        Allocation entity = fromCreateDTOToEntity(dto, room, user);
         allocationRepository.save(entity);
-        return AllocationMapper.copyCreateDTO(entity);
+        return fromEntityToDTO(entity);
     }
 }

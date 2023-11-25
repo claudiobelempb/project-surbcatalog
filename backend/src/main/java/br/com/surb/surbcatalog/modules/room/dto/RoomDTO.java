@@ -25,7 +25,7 @@ public class RoomDTO implements Serializable {
 
     public RoomDTO(){}
 
-    public RoomDTO(UUID roomId, String name, Integer seats, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    private RoomDTO(UUID roomId, String name, Integer seats, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.roomId = roomId;
         this.name = name;
         this.seats = seats;
@@ -34,60 +34,86 @@ public class RoomDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public RoomDTO(Room entity){
-        roomId = entity.getRoomId();
-        name = entity.getName();
-        seats = entity.getSeats();
-        active = entity.getActive();
-        createdAt = entity.getCreatedAt();
-        updatedAt = entity.getUpdatedAt();
+    public RoomDTO(RoomDTOBuilder builder){
+        roomId = builder.roomId;
+        name = builder.name;
+        seats = builder.seats;
+        active = builder.active;
+        createdAt = builder.createdAt;
+        updatedAt = builder.updatedAt;
     }
 
     public UUID getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(UUID roomId) {
-        this.roomId = roomId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getSeats() {
         return seats;
     }
 
-    public void setSeats(Integer seats) {
-        this.seats = seats;
-    }
-
     public Boolean getActive() {
         return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public static RoomDTOBuilder newRoomDTO() {
+        return new RoomDTOBuilder();
+    }
+
+    public static final class RoomDTOBuilder {
+        private UUID roomId;
+        private String name;
+        private Integer seats;
+        private Boolean active;
+        private OffsetDateTime createdAt;
+        private OffsetDateTime updatedAt;
+
+        private RoomDTOBuilder() {
+        }
+
+        public RoomDTOBuilder roomId(UUID roomId) {
+            this.roomId = roomId;
+            return this;
+        }
+
+        public RoomDTOBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public RoomDTOBuilder seats(Integer seats) {
+            this.seats = seats;
+            return this;
+        }
+
+        public RoomDTOBuilder active(Boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public RoomDTOBuilder createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public RoomDTOBuilder updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public RoomDTO build() {
+            return new RoomDTO(this);
+        }
     }
 }

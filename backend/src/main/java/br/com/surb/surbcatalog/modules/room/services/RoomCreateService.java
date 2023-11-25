@@ -22,8 +22,8 @@ public class RoomCreateService {
     @Transactional
     public RoomDTO execute(RoomCreateDTO dto){
         roomValidator.validate(dto);
-        Room room = RoomMapper.copyCreateEntityToDto(dto);
+        Room room = RoomMapper.fromCreateDTOToEntity(dto);
         roomRepository.save(room);
-        return RoomMapper.copyEntityToDto(room);
+        return RoomMapper.fromEntityToDTO(room);
     }
 }

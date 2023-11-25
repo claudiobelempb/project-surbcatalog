@@ -1,7 +1,6 @@
 package br.com.surb.surbcatalog.modules.room.validator;
 
 import br.com.surb.surbcatalog.modules.room.dto.RoomCreateDTO;
-import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
 import br.com.surb.surbcatalog.modules.room.dto.RoomUpdateDTO;
 import br.com.surb.surbcatalog.modules.room.repositories.RoomRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppValidatorConstants;
