@@ -1,10 +1,7 @@
 package br.com.surb.surbcatalog.modules.room.dto;
 
-import br.com.surb.surbcatalog.modules.room.entities.Room;
-
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -25,16 +22,7 @@ public class RoomDTO implements Serializable {
 
     public RoomDTO(){}
 
-    private RoomDTO(UUID roomId, String name, Integer seats, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
-        this.roomId = roomId;
-        this.name = name;
-        this.seats = seats;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public RoomDTO(RoomDTOBuilder builder){
+    private RoomDTO(RoomDTOBuilder builder){
         roomId = builder.roomId;
         name = builder.name;
         seats = builder.seats;

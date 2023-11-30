@@ -5,8 +5,10 @@ import br.com.surb.surbcatalog.modules.allocation.dto.AllocationDTO;
 import br.com.surb.surbcatalog.modules.allocation.entities.Allocation;
 import br.com.surb.surbcatalog.modules.allocation.repositories.AllocationRepository;
 import br.com.surb.surbcatalog.modules.allocation.validator.AllocationValidator;
+import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
 import br.com.surb.surbcatalog.modules.room.entities.Room;
 import br.com.surb.surbcatalog.modules.room.repositories.RoomRepository;
+import br.com.surb.surbcatalog.modules.user.dto.UserDTO;
 import br.com.surb.surbcatalog.modules.user.entities.User;
 import br.com.surb.surbcatalog.modules.user.repositories.UserRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
@@ -14,8 +16,7 @@ import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntity
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static br.com.surb.surbcatalog.modules.allocation.mapper.AllocationMapper.fromCreateDTOToEntity;
-import static br.com.surb.surbcatalog.modules.allocation.mapper.AllocationMapper.fromEntityToDTO;
+import static br.com.surb.surbcatalog.modules.allocation.mapper.AllocationMapper.*;
 
 @Service
 public class AllocationCreateService {
@@ -42,8 +43,8 @@ public class AllocationCreateService {
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "UserId " + dto.getUserId()));
 
         allocationCreateValidator.validate(dto);
-        Allocation entity = fromCreateDTOToEntity(dto, room, user);
+        Allocation entity = createAllocationDTOToEntity(dto);
         allocationRepository.save(entity);
-        return fromEntityToDTO(entity);
+        return entityToAllocationCreateDTO(entity, room.getRoomId(), user.getUserId());
     }
 }

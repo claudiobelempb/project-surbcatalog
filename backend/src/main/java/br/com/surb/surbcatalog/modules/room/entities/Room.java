@@ -37,13 +37,13 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    private Room(UUID roomId, String name, Integer seats, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
-        this.roomId = roomId;
-        this.name = name;
-        this.seats = seats;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    private Room(RoomBuilder builder) {
+        roomId = builder.roomId;
+        name = builder.name;
+        seats = builder.seats;
+        active = builder.active;
+        createdAt = builder.createdAt;
+        updatedAt = builder.updatedAt;
     }
 
     public UUID getRoomId() {
@@ -141,7 +141,7 @@ public class Room implements Serializable {
         }
 
         public Room build() {
-            return new Room(roomId, name, seats, active, createdAt, updatedAt);
+            return new Room(this);
         }
     }
 }

@@ -71,7 +71,7 @@ public class User implements Serializable {
     }
 
 
-    public static UserBuilder newUser() {
+    public static UserBuilder newUserBuilder() {
         return new UserBuilder();
     }
 
@@ -83,8 +83,6 @@ public class User implements Serializable {
 
         private UserBuilder() {
         }
-
-
 
         public UserBuilder userId(UUID userId) {
             this.userId = userId;

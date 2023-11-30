@@ -1,5 +1,6 @@
 --tb_user
 INSERT INTO tb_user (user_id, first_name, last_name, email) VALUES('84794b77-dd91-4050-9831-7de6007d103e', 'Alex', 'Brown', 'alex@gmail.com');
+INSERT INTO tb_user (user_id, first_name, last_name, email) VALUES('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'Claudio', 'Cardoso', 'claudio.c.lima@hormail.com');
 
 --Insert tb_category
 INSERT INTO tb_category (category_id, name, created_at, active) VALUES ('e15b531f-d0cf-44fe-b6d5-ee4410a2d6f0', 'Books', now(), 1);
@@ -15,8 +16,6 @@ INSERT INTO tb_category (category_id, name, created_at, active) VALUES ('be6caa0
 --Insert tb_room
 INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('fd1616cf-38b2-40d0-8241-96ebd303435d', 'Room 01', 6, NOW(), 1);
 INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('9591c390-7acc-47c0-96bf-9490ee055783', 'Room 02', 3, NOW(), 1);
-INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('dd668b0d-ccc0-4908-b563-2b135d90700b', 'Room 03', 2, NOW(), 1);
-INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('0cf6e29d-c845-4fe6-8183-f6451a171f10', 'Room 04', 7, NOW(), 1);
-INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('44d1b4cf-f591-4a7f-8cc1-5f369a741476', 'Room 05', 6, NOW(), 1);
-INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('2466cde3-e750-4d24-896c-5acfff0e7be4', 'Room 06', 7, NOW(), 1);
-INSERT INTO tb_room (room_id, name, seats, created_at, active) VALUES('c11fa373-b878-4384-8069-354604dfee0b', 'Room 07', 8, NOW(), 1);
+
+--Insert tb_allocation
+INSERT INTO tb_allocation (allocation_id, subject, start_at, end_at, created_at, active, user_id, room_id) VALUES('b3d10688-9183-4432-a0f7-c45c56425405', 'Subject 01', '2023-11-27T11:54:28.480Z', '2023-11-27T11:54:28.480Z', NOW(), 1, '84794b77-dd91-4050-9831-7de6007d103e', 'fd1616cf-38b2-40d0-8241-96ebd303435d');
