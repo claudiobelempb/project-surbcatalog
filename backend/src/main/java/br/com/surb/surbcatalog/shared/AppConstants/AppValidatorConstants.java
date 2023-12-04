@@ -26,6 +26,8 @@ public final class AppValidatorConstants {
   public static final String REQUIRED_EXIST = "Error: Já existe em nossa base de dados ";
   public static final String REQUIRED_PRICE_POSITIVO = "Error: Preço deve ser um valor positivo ";
   public static final String REQUIRED_DATA_PRESENT = "Error: A data do produto não pode ser futura ";
+  public static final String INVALID = "Error: invalid";
+  public static final String ORDER_BY = "Error: orderBy";
 
   public static final String MAX = "Error: Campo deve ser menor que ";
   public static final String MIN = "Error: Campo deve ser maior que ";
@@ -33,6 +35,7 @@ public final class AppValidatorConstants {
   public static final String INVALID_ORDER_DATE = "Error: Order data inválida ";
   public static final String IN_THE_PAST = "Error: data no passado ";
   public static final String EXCEEDS_DURATION = "Error: excede a duração ";
+  public static final String OVERLAPS = "Error: comflito de datas ";
 
 
   private AppValidatorConstants(){}

@@ -1,6 +1,8 @@
 package br.com.surb.surbcatalog.modules.allocation.repositories;
 
 import br.com.surb.surbcatalog.modules.allocation.entities.Allocation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -44,16 +46,45 @@ public interface AllocationRepository extends JpaRepository<Allocation, UUID> {
     (start_at >= '2023-11-27 11:54:28.48+00') AND
     (end_at <= '2023-11-27 11:54:28.48+00')
     */
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
+
     @Query("SELECT a FROM Allocation a WHERE" +
             "(:userId IS NULL OR a.user.userId = :userId) AND " +
             "(:roomId IS NULL OR a.room.roomId = :roomId) AND " +
             "(:startAt IS NULL OR a.startAt >= :startAt) AND " +
             "(:endAt IS NULL OR a.endAt <= :endAt)"
     )
-    List<Allocation> findAllwitnFilters(
+    Page<Allocation> findAllwitnFilters(
             @Param("userId") UUID userId,
             @Param("roomId") UUID roomId,
             @Param("startAt") OffsetDateTime startAt,
-            @Param("endAt") OffsetDateTime endAt);
+            @Param("endAt") OffsetDateTime endAt,
+            Pageable pageable
+    );
+
+    @Query("SELECT a FROM Allocation a WHERE" +
+            "(:userId IS NULL OR a.user.userId = :userId) AND " +
+            "(:roomId IS NULL OR a.room.roomId = :roomId) AND " +
+            "(:startAt IS NULL OR a.startAt >= :startAt) AND " +
+            "(:endAt IS NULL OR a.endAt <= :endAt)"
+    )
+    Page<Allocation> findAllPagewitnFilters(
+            @Param("userId") UUID userId,
+            @Param("roomId") UUID roomId,
+            @Param("startAt") OffsetDateTime startAt,
+            @Param("endAt") OffsetDateTime endAt,
+            Pageable pageable
+    );
+
+    @Query("SELECT a FROM Allocation a WHERE" +
+            "(:userId IS NULL OR a.user.userId = :userId) AND " +
+            "(:roomId IS NULL OR a.room.roomId = :roomId) AND " +
+            "(:startAt IS NULL OR a.startAt >= :startAt) AND " +
+            "(:endAt IS NULL OR a.endAt <= :endAt)"
+    )
+    List<Allocation> findAllDateWitnFilters(
+            @Param("userId") UUID userId,
+            @Param("roomId") UUID roomId,
+            @Param("startAt") OffsetDateTime startAt,
+            @Param("endAt") OffsetDateTime endAt
+    );
 }

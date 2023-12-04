@@ -31,7 +31,7 @@ public class AllocationUpdateService {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
 
         Objects.requireNonNull(allocationId);
-        allocationValidator.validate(allocationId, dto);
+        allocationValidator.validate(dto.getRoomId(), allocationId, dto);
         Allocation entity = allocationRepository
                 .findById(allocationId)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + allocationId));

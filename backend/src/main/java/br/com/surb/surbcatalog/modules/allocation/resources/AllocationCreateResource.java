@@ -28,6 +28,7 @@ public class AllocationCreateResource {
         this.executor = executor;
     }
 
+
     @PostMapping
     public CompletableFuture<ResponseEntity<AllocationDTO>> handle(@RequestBody AllocationCreateDTO dto) {
         AllocationDTO allocationDTO = allocationCreateService.execute(dto);

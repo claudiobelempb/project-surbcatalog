@@ -1,7 +1,6 @@
 package br.com.surb.surbcatalog.modules.room.resources;
 
 import br.com.surb.surbcatalog.modules.room.services.RoomActivateService;
-import br.com.surb.surbcatalog.modules.room.services.RoomDeactivateService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -8,12 +8,15 @@ import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_allocation")
 public class Allocation implements Serializable {
+
+    public static final List<String> SORT_FIELDS = List.of("startAt", "endAt");
 
     @Serial
     private static final long serialVersionUID = -3812744367957338674L;

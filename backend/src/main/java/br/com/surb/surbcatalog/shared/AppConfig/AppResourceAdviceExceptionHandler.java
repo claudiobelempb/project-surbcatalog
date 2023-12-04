@@ -49,6 +49,18 @@ public class AppResourceAdviceExceptionHandler {
     return ResponseEntity.status(status).body(err);
   }
 
+  /*@ExceptionHandler(AppInvalidRequestException.class)
+  public ResponseEntity<AppStandarError> database(AppInvalidRequestException e, HttpServletRequest request) {
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+    AppStandarError err = new AppStandarError();
+    err.setTimestamp(Instant.now());
+    err.setStatus(status.value());
+    err.setError(AppExceptionConstants.BAD_REQUEST);
+    err.setMessage(e.getMessage());
+    err.setPath(request.getRequestURI());
+    return ResponseEntity.status(status).body(err);
+  }*/
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<AppValidationError> validation(
     MethodArgumentNotValidException e, HttpServletRequest request) {

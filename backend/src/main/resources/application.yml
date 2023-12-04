@@ -27,3 +27,8 @@ logging:
     level:
         org.springframework: ERROR
         org.flywaydb: ERROR
+# =================================
+# = App Congig
+# =================================
+appConfig:
+    maxSize: 50

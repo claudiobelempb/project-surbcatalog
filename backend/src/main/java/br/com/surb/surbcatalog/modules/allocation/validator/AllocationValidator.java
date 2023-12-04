@@ -2,6 +2,7 @@ package br.com.surb.surbcatalog.modules.allocation.validator;
 
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationCreateDTO;
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationUpdateDTO;
+import br.com.surb.surbcatalog.modules.allocation.entities.Allocation;
 import br.com.surb.surbcatalog.modules.allocation.repositories.AllocationRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppValidatorConstants;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
@@ -11,29 +12,31 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Component
 public class AllocationValidator {
-    private final AllocationRepository allocationRepository;
+
+    private static AllocationRepository allocationRepository;
 
     public AllocationValidator(AllocationRepository allocationRepository) {
-        this.allocationRepository = allocationRepository;
+        AllocationValidator.allocationRepository = allocationRepository;
     }
 
     public void validate(AllocationCreateDTO dto) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
         validateSubject(dto.getSubject(), appValidateErrors);
-        validateDates(dto.getStartAt(), dto.getEndAt(), appValidateErrors);
+        validateDates(dto.getRoomId(), dto.getStartAt(), dto.getEndAt(), appValidateErrors);
 
         AppValidatorUtils.throwOnError(appValidateErrors);
     }
 
-    public void validate(UUID allocationId, AllocationUpdateDTO dto) {
+    public void validate(UUID roomId, UUID allocationId, AllocationUpdateDTO dto) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
         AppValidatorUtils.validateRequiredValid(allocationId, "allocationId", appValidateErrors);
         validateSubject(dto.getSubject(), appValidateErrors);
-        validateDates(dto.getStartAt(), dto.getEndAt(), appValidateErrors);
+        validateDates(roomId, dto.getStartAt(), dto.getEndAt(), appValidateErrors);
 
         AppValidatorUtils.throwOnError(appValidateErrors);
     }
@@ -46,12 +49,12 @@ public class AllocationValidator {
 
     }
 
-    private static void validateDates(OffsetDateTime startAt, OffsetDateTime endAt, AppValidationErrors appValidationErrors) {
+    private static void validateDates(UUID roomId, OffsetDateTime startAt, OffsetDateTime endAt, AppValidationErrors appValidationErrors) {
         if (validateDatesPresent(startAt, endAt, appValidationErrors)) {
             validateDateOrdering(startAt, endAt, appValidationErrors);
             validateDateInTheFuture(startAt, appValidationErrors);
             validateDuration(startAt, endAt, appValidationErrors);
-            validateIfTimeAvailable(startAt, endAt, appValidationErrors);
+            validateIfTimeAvailable(roomId, startAt, endAt, appValidationErrors);
         }
     }
 
@@ -82,8 +85,18 @@ public class AllocationValidator {
         }
     }
 
-    private static void validateIfTimeAvailable(OffsetDateTime startAt, OffsetDateTime endAt, AppValidationErrors appValidationErrors) {
-        //TODO
+    private static void validateIfTimeAvailable(UUID roomId, OffsetDateTime startAt, OffsetDateTime endAt, AppValidationErrors appValidationErrors) {
+        List<Allocation> allocations = allocationRepository.findAllDateWitnFilters(
+                null,
+                roomId,
+                AppDateUtils.now(),
+                endAt
+        );
+        allocations
+                .stream()
+                .filter(a -> AppDateUtils.isOverLapping(startAt, endAt, a.getStartAt(), a.getEndAt()))
+                .findFirst()
+                .ifPresent(__ -> appValidationErrors.addErrors("startAt", AppValidatorConstants.OVERLAPS));
     }
 
 }
