@@ -36,7 +36,6 @@ public class AllocationFindAllPageService {
     public Page<AllocationDTO> execute(UUID userId, UUID roomId, LocalDate startAt, LocalDate endAt, String orderBy, Integer size, Integer page) {
 
         Pageable pageable = AppPageUtils.appPageable(page, size, maxSize, orderBy, Allocation.SORT_FIELDS);
-        System.out.println("Max size: " + this.maxSize);
 
         Page<Allocation> allocations = allocationRepository
                 .findAllPagewitnFilters(

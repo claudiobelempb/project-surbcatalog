@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -33,13 +32,13 @@ public class AllocationFindAllPageResource {
      */
     @GetMapping(value = "/pages")
     public CompletableFuture<ResponseEntity<Page<AllocationDTO>>> handle(
-            @RequestParam(value = "userId", defaultValue = "") UUID userId,
-            @RequestParam(value = "roomId", defaultValue = "") UUID roomId,
+            @RequestParam(value = "userId", required = false) UUID userId,
+            @RequestParam(value = "roomId", required = false) UUID roomId,
             @RequestParam(value = "startAt", required = false) LocalDate startAt,
             @RequestParam(value = "endAt", required = false) LocalDate endAt,
-            @RequestParam(value = "orderBy", defaultValue = "ASC") String orderBy,
-            @RequestParam(value = "size", defaultValue = "0") Integer size,
-            @RequestParam(value = "page", defaultValue = "0") Integer page
+            @RequestParam(value = "orderBy", required = false) String orderBy,
+            @RequestParam(value = "size", required = false) Integer size,
+            @RequestParam(value = "page", required = false) Integer page
     ) {
         return CompletableFuture.supplyAsync(() -> allocationFindAllPageService.execute(userId, roomId, startAt, endAt, orderBy, size, page), executor)
                 .thenApply((r) -> ResponseEntity.ok().body(r));
