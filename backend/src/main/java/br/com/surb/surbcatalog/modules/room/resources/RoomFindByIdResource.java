@@ -4,10 +4,7 @@ import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
 import br.com.surb.surbcatalog.modules.room.services.RoomFindByIdService;
 import br.com.surb.surbcatalog.shared.AppUtils.AppResponseEntityUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -27,7 +24,7 @@ public class RoomFindByIdResource {
     }
 
     @GetMapping(value = "/{roomId}")
-    public CompletableFuture<ResponseEntity<RoomDTO>> handle(@PathVariable UUID roomId){
+    public CompletableFuture<ResponseEntity<RoomDTO>> handle(@PathVariable UUID roomId, @RequestHeader String apiKey){
         //return supplyAsync(() -> roomFindByIdService.execute(roomId), controllersExecutor).thenApply((r) -> ResponseEntity.ok().body(r));
         return supplyAsync(() -> roomFindByIdService.execute(roomId), controllersExecutor).thenApply(AppResponseEntityUtils::ok);
     }
