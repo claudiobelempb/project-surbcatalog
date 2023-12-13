@@ -20,6 +20,16 @@ spring:
                     uaa:
                         clientId: ${CLIENT_ID:my-client-id}
                         clientSecret: ${CLIENT_SECRET:my-client-secret}
+    email:
+        host: smtp.mail.com
+        username: abc@gmail.com
+        passowrd: xyz
+        from: abc@gmail.com
+        propertie:
+            mail.transport.protocol: smtp
+            mail.smtp.port: 587
+            mail.smtp.auth: true
+            mail.smtp.starttls.enable: true
 # =================================
 # = Logging
 # =================================
