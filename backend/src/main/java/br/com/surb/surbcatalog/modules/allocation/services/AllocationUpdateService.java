@@ -20,10 +20,12 @@ import java.util.UUID;
 public class AllocationUpdateService {
     private final AllocationRepository allocationRepository;
     private final AllocationValidator allocationValidator;
+//    private final AllocationNotificationService allocationNotificationService;
 
-    public AllocationUpdateService(AllocationRepository allocationRepository, AllocationValidator allocationValidator) {
+    public AllocationUpdateService(AllocationRepository allocationRepository, AllocationValidator allocationValidator, AllocationNotificationService allocationNotificationService) {
         this.allocationRepository = allocationRepository;
         this.allocationValidator = allocationValidator;
+//        this.allocationNotificationService = allocationNotificationService;
     }
 
     @Transactional
@@ -38,6 +40,7 @@ public class AllocationUpdateService {
         if (entity.getEndAt().isBefore(AppDateUtils.now())) {
             throw new AppInvalidRequestException(AppValidatorConstants.IN_THE_PAST + allocationId, appValidateErrors);
         }
+        //allocationNotificationService.notifyAllocationUpdate(entity);
         allocationRepository.update(allocationId, dto.getSubject(), dto.getStartAt(), dto.getEndAt());
     }
 }

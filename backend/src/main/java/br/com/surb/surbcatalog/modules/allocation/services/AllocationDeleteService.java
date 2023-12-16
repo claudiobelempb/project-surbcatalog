@@ -15,9 +15,11 @@ import java.util.UUID;
 @Service
 public class AllocationDeleteService {
     private final AllocationRepository allocationRepository;
+//    private final AllocationNotificationService allocationNotificationService;
 
-    public AllocationDeleteService(AllocationRepository allocationRepository) {
+    public AllocationDeleteService(AllocationRepository allocationRepository, AllocationNotificationService allocationNotificationService) {
         this.allocationRepository = allocationRepository;
+//        this.allocationNotificationService = allocationNotificationService;
     }
 
     public void execute(UUID allocationId){
@@ -28,6 +30,7 @@ public class AllocationDeleteService {
         if(entity.getEndAt().isBefore(AppDateUtils.now())){
             throw new AppInvalidRequestException(AppValidatorConstants.IN_THE_PAST + allocationId, appValidateErrors);
         }
+        //allocationNotificationService.notifyAllocationDelete(entity);
         allocationRepository.delete(entity);
     }
 }

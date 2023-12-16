@@ -57,14 +57,14 @@ public class EmailSendService {
         try {
             mineMessage.setFrom(emailInfo.getFrom());
             mineMessage.setSubject(emailInfo.getSubject());
-            mineMessage.addRecipients(Message.RecipientType.TO, AppStringUtils.join(emailInfo.getTo()));
+            mineMessage.addRecipients(Message.RecipientType.TO, AppStringUtils.AppStringUltilsJoin(emailInfo.getTo()));
 
             if (Objects.isNull(emailInfo.getCc())) {
-                mineMessage.addRecipients(Message.RecipientType.CC, AppStringUtils.join(emailInfo.getCc()));
+                mineMessage.addRecipients(Message.RecipientType.CC, AppStringUtils.AppStringUltilsJoin(emailInfo.getCc()));
             }
 
             if (Objects.isNull(emailInfo.getBcc())) {
-                mineMessage.addRecipients(Message.RecipientType.BCC, AppStringUtils.join(emailInfo.getBcc()));
+                mineMessage.addRecipients(Message.RecipientType.BCC, AppStringUtils.AppStringUltilsJoin(emailInfo.getBcc()));
             }
         } catch (MessagingException e) {
             throwEmailSendingException(e, "Error adding data to MINE Message");

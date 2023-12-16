@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>O agendamento de sala foi criado com sucesso</h2>
+    <h3>Funcionário Responsável</h3>
+    <ul>
+        <li><b>Nome:</b> <span>th:text="${allocation.user.name}"</span></li>
+        <li><b>E-mail:</b> <span>th:text="${allocation.user.email}"</span></li>
+    </ul>
+
+    <h3>Dados do Agendamento</h3>
+    <ul>
+        <li><b>Sala:</b> <span>th:text="${allocation.room.name}"</span></li>
+        <li><b>Lugares disponiveis:</b> <span>th:text="${allocation.room.seats}"</span></li>
+        <li><b>Tema:</b> <span>th:text="${allocation.room.subjct}"</span></li>
+        <li><b>Data de inicio:</b> <span>th:text="${#temporals.format(allocation.room.start, 'dd-MM-yyyy HH:mm')}"</span></li>
+        <li><b>Data de Fim:</b> <span>th:text="${#temporals.format(allocation.room.end, 'dd-MM-yyyy HH:mm')}"</span></li>
+    </ul>
+</body>
+</html>

@@ -25,7 +25,7 @@ spring:
         username: abc@gmail.com
         passowrd: xyz
         from: abc@gmail.com
-        propertie:
+        properties:
             mail.transport.protocol: smtp
             mail.smtp.port: 587
             mail.smtp.auth: true
@@ -42,3 +42,14 @@ logging:
 # =================================
 appConfig:
     maxSize: 50
+    email:
+        templates:
+            created:
+                subject: Novo agendamento de sala criado
+                templateName: template-created.html
+            updated:
+                subject: Agendamento de sala alterado
+                templateName: template-updated.html
+            deleted:
+                subject: Agendamento de sala excluido
+                templateName: template-deleted.html

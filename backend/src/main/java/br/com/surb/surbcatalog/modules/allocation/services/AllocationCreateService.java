@@ -23,17 +23,19 @@ public class AllocationCreateService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final AllocationValidator allocationCreateValidator;
+//    private final AllocationNotificationService allocationNotificationService;
 
     public AllocationCreateService(
             AllocationRepository allocationRepository,
             RoomRepository roomRepository,
             UserRepository userRepository,
-            AllocationValidator allocationCreateValidator
-    ) {
+            AllocationValidator allocationCreateValidator,
+            AllocationNotificationService allocationNotificationService) {
         this.allocationRepository = allocationRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
         this.allocationCreateValidator = allocationCreateValidator;
+//        this.allocationNotificationService = allocationNotificationService;
     }
 
     @Transactional
@@ -48,6 +50,7 @@ public class AllocationCreateService {
         allocationCreateValidator.validate(dto);
         Allocation entity = createAllocationDTOToEntity(dto);
         allocationRepository.save(entity);
+        //allocationNotificationService.notifyAllocationCreate(entity);
         return entityToAllocationCreateDTO(entity, room.getRoomId(), user.getUserId());
     }
 }
