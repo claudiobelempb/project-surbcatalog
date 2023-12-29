@@ -1,53 +1,60 @@
 package br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsResource;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 
-public class AppStandarError {
-  private Instant timestamp;
-  private Integer status;
-  private String error;
-  private String message;
-  private String path;
+public class AppStandarError implements Serializable {
 
-  public AppStandarError() {}
+    @Serial
+    private static final long serialVersionUID = 4425871258555747338L;
 
-  public Instant getTimestamp() {
-    return timestamp;
-  }
+    private Instant timestamp;
+    private Integer status;
+    private String error;
+    private String message;
+    private String path;
 
-  public void setTimestamp(Instant timestamp) {
-    this.timestamp = timestamp;
-  }
+    public AppStandarError() {
+    }
 
-  public Integer getStatus() {
-    return status;
-  }
+    public Instant getTimestamp() {
+        return timestamp;
+    }
 
-  public void setStatus(Integer status) {
-    this.status = status;
-  }
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
+    }
 
-  public String getError() {
-    return error;
-  }
+    public Integer getStatus() {
+        return status;
+    }
 
-  public void setError(String error) {
-    this.error = error;
-  }
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-  public String getMessage() {
-    return message;
-  }
+    public String getError() {
+        return error;
+    }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
+    public void setError(String error) {
+        this.error = error;
+    }
 
-  public String getPath() {
-    return path;
-  }
+    public String getMessage() {
+        return message;
+    }
 
-  public void setPath(String path) {
-    this.path = path;
-  }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

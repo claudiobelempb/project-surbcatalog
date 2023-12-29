@@ -1,12 +1,15 @@
 package br.com.surb.surbcatalog.modules.user.entities;
 
+import br.com.surb.surbcatalog.modules.role.entities.Role;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,33 +22,48 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
-    private String apiKey;
+    private UUID apiKey;
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private Boolean active;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
     public User() {
     }
 
-    private User(UserBuilder userBuilder) {
-        userId = userBuilder.userId;
-        apiKey = userBuilder.apiKey;
-        firstName = userBuilder.firstName;
-        lastName = userBuilder.lastName;
-        email = userBuilder.email;
-        active = userBuilder.active;
-        createdAt = userBuilder.createdAt;
-        updatedAt = userBuilder.updatedAt;
+    private User(Builder builder) {
+        userId = builder.userId;
+        apiKey = builder.apiKey;
+        firstName = builder.firstName;
+        lastName = builder.lastName;
+        email = builder.email;
+        password = builder.password;
+        active = builder.active;
+        createdAt = builder.createdAt;
+        updatedAt = builder.updatedAt;
+        roles = builder.roles;
+    }
+
+    private User(Builder builder, Set<Role> roles) {
+        this(builder);
+        this.roles.addAll(roles);
     }
 
     public UUID getUserId() {
         return userId;
     }
 
-    public String getApiKey() {
+    public UUID getApiKey() {
         return apiKey;
     }
 
@@ -61,6 +79,10 @@ public class User implements Serializable {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public Boolean getActive() {
         return active;
     }
@@ -73,8 +95,13 @@ public class User implements Serializable {
         return updatedAt;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @PrePersist
     public void prePersist() {
+        apiKey = UUID.randomUUID();
         createdAt = AppDateUtils.now();
         updatedAt = createdAt;
         active = true;
@@ -90,82 +117,80 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(apiKey, user.apiKey) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(active, user.active) && Objects.equals(createdAt, user.createdAt) && Objects.equals(updatedAt, user.updatedAt);
+        return Objects.equals(userId, user.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, apiKey, firstName, lastName, email, active, createdAt, updatedAt);
+        return Objects.hash(userId);
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", apiKey='" + apiKey + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", active=" + active +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    public static UserBuilder newUserBuilder() {
-        return new UserBuilder();
-    }
-
-    public static final class UserBuilder {
+    public static final class Builder {
         private UUID userId;
-        private String apiKey;
+        private UUID apiKey;
         private String firstName;
         private String lastName;
         private String email;
+        private String password;
         private Boolean active;
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
+        private Set<Role> roles = new HashSet<>();
 
-        private UserBuilder() {
+        public Builder() {
         }
 
-        public UserBuilder userId(UUID userId) {
+        public Builder userId(UUID userId) {
             this.userId = userId;
             return this;
         }
 
-        public UserBuilder apiKey(String apiKey) {
+        public Builder apiKey(UUID apiKey) {
             this.apiKey = apiKey;
             return this;
         }
 
-        public UserBuilder firstName(String firstName) {
+        public Builder firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public UserBuilder lastName(String lastName) {
+        public Builder lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public UserBuilder email(String email) {
+        public Builder email(String email) {
             this.email = email;
             return this;
         }
 
-        public UserBuilder active(Boolean active) {
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public UserBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public UserBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder roles(Set<Role> roles) {
+            this.roles = roles;
             return this;
         }
 

@@ -19,10 +19,12 @@ import static br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils.DEFAULT_TIMEZ
 @Service
 public class AllocationFindAllService {
     private final AllocationRepository allocationRepository;
+    private final AllocationMapper allocationMapper;
     //private final int maxLimit;
 
-    public AllocationFindAllService(AllocationRepository allocationRepository) {
+    public AllocationFindAllService(AllocationRepository allocationRepository, AllocationMapper allocationMapper) {
         this.allocationRepository = allocationRepository;
+        this.allocationMapper = allocationMapper;
     }
 
 
@@ -42,6 +44,6 @@ public class AllocationFindAllService {
 
                 );
         return allocations
-                .map((a) -> AllocationMapper.entityToAllocationDTO(a));
+                .map((a) -> AllocationMapper.fromDTO(a));
     }
 }

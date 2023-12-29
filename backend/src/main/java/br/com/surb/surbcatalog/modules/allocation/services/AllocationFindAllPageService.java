@@ -14,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils.DEFAULT_TIMEZONE;
 
 @Service
 public class AllocationFindAllPageService {
     private final AllocationRepository allocationRepository;
+    private final AllocationMapper allocationMapper;
     private final int maxSize;
 
-    public AllocationFindAllPageService(AllocationRepository allocationRepository, @Value(AppConfigConstants.ALLOCATION_MAX_SIZE) int maxSize) {
+    public AllocationFindAllPageService(AllocationRepository allocationRepository, AllocationMapper allocationMapper, @Value(AppConfigConstants.ALLOCATION_MAX_SIZE) int maxSize) {
         this.allocationRepository = allocationRepository;
+        this.allocationMapper = allocationMapper;
         this.maxSize = maxSize;
     }
 
@@ -46,6 +46,6 @@ public class AllocationFindAllPageService {
                         pageable
                 );
         return allocations
-                .map((a) -> AllocationMapper.entityToAllocationDTO(a));
+                .map((a) ->AllocationMapper.fromDTO(a));
     }
 }

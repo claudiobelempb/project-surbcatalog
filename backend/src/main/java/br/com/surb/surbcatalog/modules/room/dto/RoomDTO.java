@@ -20,9 +20,10 @@ public class RoomDTO implements Serializable {
 
     private OffsetDateTime updatedAt;
 
-    public RoomDTO(){}
+    public RoomDTO() {
+    }
 
-    private RoomDTO(RoomDTOBuilder builder){
+    private RoomDTO(Builder builder) {
         roomId = builder.roomId;
         name = builder.name;
         seats = builder.seats;
@@ -55,11 +56,11 @@ public class RoomDTO implements Serializable {
         return updatedAt;
     }
 
-    public static RoomDTOBuilder newRoomDTO() {
-        return new RoomDTOBuilder();
+    public static Builder newBuilderDTO() {
+        return new Builder();
     }
 
-    public static final class RoomDTOBuilder {
+    public static final class Builder {
         private UUID roomId;
         private String name;
         private Integer seats;
@@ -67,35 +68,35 @@ public class RoomDTO implements Serializable {
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
 
-        private RoomDTOBuilder() {
+        private Builder() {
         }
 
-        public RoomDTOBuilder roomId(UUID roomId) {
+        public Builder roomId(UUID roomId) {
             this.roomId = roomId;
             return this;
         }
 
-        public RoomDTOBuilder name(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public RoomDTOBuilder seats(Integer seats) {
+        public Builder seats(Integer seats) {
             this.seats = seats;
             return this;
         }
 
-        public RoomDTOBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public RoomDTOBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public RoomDTOBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

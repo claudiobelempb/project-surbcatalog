@@ -11,7 +11,7 @@ public abstract class RoomMapper {
         if (dto == null) {
             return null;
         }
-        return Room.newRoomBuilder()
+        return Room.newBuilder()
                 .roomId(dto.getRoomId())
                 .name(dto.getName())
                 .seats(dto.getSeats())
@@ -25,7 +25,7 @@ public abstract class RoomMapper {
         if (entity == null) {
             return null;
         }
-        return RoomCreateDTO.newRoomDTO()
+        return RoomCreateDTO.newBuilderDTO()
                 .roomId(entity.getRoomId())
                 .name(entity.getName())
                 .seats(entity.getSeats())

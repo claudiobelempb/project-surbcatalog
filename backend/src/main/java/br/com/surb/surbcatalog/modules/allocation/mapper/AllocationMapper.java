@@ -3,64 +3,59 @@ package br.com.surb.surbcatalog.modules.allocation.mapper;
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationCreateDTO;
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationDTO;
 import br.com.surb.surbcatalog.modules.allocation.entities.Allocation;
+import br.com.surb.surbcatalog.modules.category.dto.CategoryDTO;
+import br.com.surb.surbcatalog.modules.role.dto.RoleDTO;
+import br.com.surb.surbcatalog.modules.room.dto.RoomDTO;
 import br.com.surb.surbcatalog.modules.room.entities.Room;
+import br.com.surb.surbcatalog.modules.user.dto.UserDTO;
 import br.com.surb.surbcatalog.modules.user.entities.User;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-public abstract class AllocationMapper {
+@Component
+public class AllocationMapper {
 
-    public static Allocation createAllocationDTOToEntity(AllocationCreateDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        return Allocation.newAllocation()
-                .allocationId(dto.getAllocationId())
-                .subject(dto.getSubject())
-                .startAt(dto.getStartAt())
-                .endAt(dto.getEndAt())
-                .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
-                .active(dto.getActive())
-                .room(Room.newRoomBuilder().roomId(dto.getRoomId()).build())
-                .user(User.newUserBuilder().userId(dto.getUserId()).build())
-                .build();
+    public AllocationMapper() {
     }
 
-    public static AllocationDTO entityToAllocationCreateDTO(Allocation entity, UUID roomId, UUID userId) {
-        if (entity == null) {
+    public static AllocationDTO fromDTO(Allocation allocation) {
+        if (allocation == null) {
             return null;
         }
 
-        return AllocationCreateDTO.newAllocationDTO()
-                .allocationId(entity.getAllocationId())
-                .subject(entity.getSubject())
-                .startAt(entity.getStartAt())
-                .endAt(entity.getEndAt())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .active(entity.getActive())
-                .roomId(roomId)
-                .userId(userId)
-                .build();
+        AllocationCreateDTO.Builder dto = AllocationCreateDTO.newBuilderDTO();
+
+        dto.roomId(allocation.getAllocationId());
+        dto.subject(allocation.getSubject());
+        dto.startAt(allocation.getStartAt());
+        dto.endAt(allocation.getEndAt());
+        dto.active(allocation.getActive());
+        dto.createdAt(allocation.getCreatedAt());
+        dto.updatedAt(allocation.getUpdatedAt());
+        dto.roomId(allocation.getRoom().getRoomId());
+        dto.userId(allocation.getUser().getUserId());
+
+        return dto.build();
     }
 
-    public static AllocationDTO entityToAllocationDTO(Allocation entity) {
-        if (entity == null) {
+    public static Allocation fromEntity(AllocationDTO allocationDTO, UUID roomId, UUID userId) {
+        if (allocationDTO == null) {
             return null;
         }
 
-        return AllocationCreateDTO.newAllocationDTO()
-                .allocationId(entity.getAllocationId())
-                .subject(entity.getSubject())
-                .startAt(entity.getStartAt())
-                .endAt(entity.getEndAt())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .active(entity.getActive())
-                .roomId(entity.getRoom().getRoomId())
-                .userId(entity.getUser().getUserId())
-                .build();
-    }
+        Allocation.Builder entity = Allocation.newBuilder();
 
+        entity.allocationId(allocationDTO.getAllocationId());
+        entity.subject(allocationDTO.getSubject());
+        entity.startAt(allocationDTO.getStartAt());
+        entity.endAt(allocationDTO.getEndAt());
+        entity.active(allocationDTO.getActive());
+        entity.createdAt(allocationDTO.getCreatedAt());
+        entity.updatedAt(allocationDTO.getUpdatedAt());
+        entity.room(Room.newBuilder().roomId(roomId).build());
+        entity.user(User.newBuilder().userId(userId).build());
+
+        return entity.build();
+    }
 }

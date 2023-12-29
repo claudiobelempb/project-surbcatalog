@@ -1,6 +1,15 @@
+--Insert tb_room
+INSERT INTO tb_role (role_id, authority, created_at, active) VALUES('be748452-8ed7-451d-9f31-39aa856a27b1', 'ROLE_ADMIN', NOW(), 'TRUE');
+INSERT INTO tb_role (role_id, authority, created_at, active) VALUES('f1d27476-fda1-4376-83a3-7281df8cef16', 'ROLE_OPERATOR', NOW(), 'TRUE');
+
 --tb_user
-INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, active, created_at, updated_at) VALUES('84794b77-dd91-4050-9831-7de6007d103e', 'd4c0e714-1297-4c11-9805-f6ad10cab6bf', 'Alex', 'Brown', 'alex@gmail.com', 1, NOW(), NOW());
-INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, active, created_at, updated_at) VALUES('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'ecf978fc-2087-440c-848b-2b0452c00b31', 'Claudio', 'Cardoso', 'claudio.c.lima@hormail.com', 1, NOW(), NOW());
+INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, password, active, created_at) VALUES('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'ecf978fc-2087-440c-848b-2b0452c00b31', 'Claudio', 'Cardoso', 'claudio.c.lima@hormail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1, NOW());
+INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, password, active, created_at) VALUES('84794b77-dd91-4050-9831-7de6007d103e', 'd4c0e714-1297-4c11-9805-f6ad10cab6bf', 'Alex', 'Brown', 'alex@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1, NOW());
+
+--tb_user_role
+INSERT INTO tb_user_role (user_id, role_id) VALUES ('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'be748452-8ed7-451d-9f31-39aa856a27b1');
+INSERT INTO tb_user_role (user_id, role_id) VALUES ('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'f1d27476-fda1-4376-83a3-7281df8cef16');
+INSERT INTO tb_user_role (user_id, role_id) VALUES ('84794b77-dd91-4050-9831-7de6007d103e', 'f1d27476-fda1-4376-83a3-7281df8cef16');
 
 --Insert tb_category
 INSERT INTO tb_category (category_id, name, created_at, active) VALUES ('e15b531f-d0cf-44fe-b6d5-ee4410a2d6f0', 'Books', now(), 1);

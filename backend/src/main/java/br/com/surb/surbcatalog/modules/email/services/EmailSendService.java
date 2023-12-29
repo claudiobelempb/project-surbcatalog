@@ -27,8 +27,8 @@ import java.util.Objects;
 
 @Service
 public class EmailSendService {
-    private static final Logger logger = LoggerFactory.getLogger(EmailSendService.class);
-    private static final String TEXT_HTML_CHARSET_UTF_8 = "text/html;chaset=UTF-8";
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailSendService.class);
+    private static final String TEXT_HTML_CHARSET_UTF_8 = "text/html;charset=UTF-8";
 
     private final JavaMailSender javaMailSender;
     private final ITemplateEngine templateEngine;
@@ -40,7 +40,7 @@ public class EmailSendService {
 
     @Async
     public void send(EmailInfo emailInfo) {
-        logger.info("Sending e-mail whth subject '{}' to '{}'", emailInfo.getSubject(), emailInfo.getTo());
+        LOGGER.info("Sending e-mail whth subject '{}' to '{}'", emailInfo.getSubject(), emailInfo.getTo());
 
         MimeMessage mineMessage = javaMailSender.createMimeMessage();
         MimeMultipart multipart = new MimeMultipart();
@@ -112,7 +112,7 @@ public class EmailSendService {
 
     private void throwEmailSendingException(Exception exception, String errorMessage) {
         String fullErrorrMessage = String.format("%s %s", exception.getMessage(), errorMessage);
-        logger.error(fullErrorrMessage);
+        LOGGER.error(fullErrorrMessage);
         throw new AppMessagingException(fullErrorrMessage);
     }
 }

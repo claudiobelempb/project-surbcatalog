@@ -1,8 +1,12 @@
 package br.com.surb.surbcatalog.modules.user.dto;
 
+import br.com.surb.surbcatalog.modules.role.dto.RoleDTO;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class UserDTO implements Serializable {
@@ -11,7 +15,7 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = -4188542304189279824L;
 
     private UUID userId;
-    private String apiKey;
+    private UUID apiKey;
     private String firstName;
     private String lastName;
     private String email;
@@ -19,10 +23,12 @@ public class UserDTO implements Serializable {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
+    private Set<RoleDTO> roles = new HashSet<>();
+
     public UserDTO() {
     }
 
-    private UserDTO(UserDTOBuilder builder) {
+    private UserDTO(Builder builder) {
         userId = builder.userId;
         apiKey = builder.apiKey;
         firstName = builder.firstName;
@@ -31,13 +37,14 @@ public class UserDTO implements Serializable {
         active = builder.active;
         createdAt = builder.createdAt;
         updatedAt = builder.updatedAt;
+        roles = builder.roles;
     }
 
     public UUID getUserId() {
         return userId;
     }
 
-    public String getApiKey() {
+    public UUID getApiKey() {
         return apiKey;
     }
 
@@ -65,60 +72,70 @@ public class UserDTO implements Serializable {
         return updatedAt;
     }
 
-    public static UserDTOBuilder newUserDTO() {
-        return new UserDTOBuilder();
+    public Set<RoleDTO> getRoles() {
+        return roles;
     }
 
-    public static final class UserDTOBuilder {
+    public static Builder newBuilderDTO() {
+        return new Builder();
+    }
+
+    public static final class Builder {
         private UUID userId;
-        private String apiKey;
+        private UUID apiKey;
         private String firstName;
         private String lastName;
         private String email;
         private Boolean active;
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
+        private Set<RoleDTO> roles;
 
-        private UserDTOBuilder() {
+        private Builder() {
         }
 
-        public UserDTOBuilder userId(UUID userId) {
+        public Builder userId(UUID userId) {
             this.userId = userId;
             return this;
         }
 
-        public UserDTOBuilder apiKey(String apiKey) {
+        public Builder apiKey(UUID apiKey) {
             this.apiKey = apiKey;
             return this;
         }
 
-        public UserDTOBuilder firstName(String firstName) {
+        public Builder firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public UserDTOBuilder lastName(String lastName) {
+        public Builder lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public UserDTOBuilder email(String email) {
+        public Builder email(String email) {
             this.email = email;
             return this;
         }
 
-        public UserDTOBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public UserDTOBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public UserDTOBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder roles(Set<RoleDTO> roles) {
+            this.roles = roles;
             return this;
         }
 

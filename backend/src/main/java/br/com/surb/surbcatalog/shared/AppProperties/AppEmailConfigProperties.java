@@ -18,6 +18,8 @@ public class AppEmailConfigProperties {
     private final String from;
     private final Map<String, String> properties;
 
+
+
     public AppEmailConfigProperties(String host, String username, String password, String from, Map<String, String> properties) {
         this.host = host;
         this.username = username;
@@ -25,6 +27,7 @@ public class AppEmailConfigProperties {
         this.from = from;
         this.properties = properties;
     }
+
 
     public String getHost() {
         return host;

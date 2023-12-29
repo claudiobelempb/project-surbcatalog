@@ -43,16 +43,16 @@ public class Allocation implements Serializable {
     public Allocation() {
     }
 
-    private Allocation(AllocationBuilder allocationBuilder) {
-        allocationId = allocationBuilder.allocationId;
-        subject = allocationBuilder.subject;
-        startAt = allocationBuilder.startAt;
-        endAt = allocationBuilder.endAt;
-        createdAt = allocationBuilder.createdAt;
-        updatedAt = allocationBuilder.updatedAt;
-        active = allocationBuilder.active;
-        room = allocationBuilder.room;
-        user = allocationBuilder.user;
+    private Allocation(Builder builder) {
+        allocationId = builder.allocationId;
+        subject = builder.subject;
+        startAt = builder.startAt;
+        endAt = builder.endAt;
+        createdAt = builder.createdAt;
+        updatedAt = builder.updatedAt;
+        active = builder.active;
+        room = builder.room;
+        user = builder.user;
     }
 
     public UUID getAllocationId() {
@@ -108,20 +108,12 @@ public class Allocation implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Allocation that = (Allocation) o;
-        return Objects.equals(allocationId, that.allocationId) &&
-                Objects.equals(subject, that.subject) &&
-                Objects.equals(startAt, that.startAt) &&
-                Objects.equals(endAt, that.endAt) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt) &&
-                Objects.equals(active, that.active) &&
-                Objects.equals(room, that.room) &&
-                Objects.equals(user, that.user);
+        return Objects.equals(allocationId, that.allocationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(allocationId, subject, startAt, endAt, createdAt, updatedAt, active, room, user);
+        return Objects.hash(allocationId);
     }
 
     @Override
@@ -139,12 +131,11 @@ public class Allocation implements Serializable {
                 '}';
     }
 
-    public static AllocationBuilder newAllocation() {
-        return new AllocationBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-
-    public static final class AllocationBuilder {
+    public static final class Builder {
         private UUID allocationId;
         private String subject;
         private OffsetDateTime startAt;
@@ -155,50 +146,50 @@ public class Allocation implements Serializable {
         private Room room;
         private User user;
 
-        private AllocationBuilder() {
+        private Builder() {
         }
 
-        public AllocationBuilder allocationId(UUID allocationId) {
+        public Builder allocationId(UUID allocationId) {
             this.allocationId = allocationId;
             return this;
         }
 
-        public AllocationBuilder subject(String subject) {
+        public Builder subject(String subject) {
             this.subject = subject;
             return this;
         }
 
-        public AllocationBuilder startAt(OffsetDateTime startAt) {
+        public Builder startAt(OffsetDateTime startAt) {
             this.startAt = startAt;
             return this;
         }
 
-        public AllocationBuilder endAt(OffsetDateTime endAt) {
+        public Builder endAt(OffsetDateTime endAt) {
             this.endAt = endAt;
             return this;
         }
 
-        public AllocationBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public AllocationBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public AllocationBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public AllocationBuilder room(Room room) {
+        public Builder room(Room room) {
             this.room = room;
             return this;
         }
 
-        public AllocationBuilder user(User user) {
+        public Builder user(User user) {
             this.user = user;
             return this;
         }

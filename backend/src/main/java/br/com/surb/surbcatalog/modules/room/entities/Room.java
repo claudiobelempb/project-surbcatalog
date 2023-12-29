@@ -37,7 +37,7 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    private Room(RoomBuilder builder) {
+    private Room(Builder builder) {
         roomId = builder.roomId;
         name = builder.name;
         seats = builder.seats;
@@ -95,11 +95,11 @@ public class Room implements Serializable {
         return Objects.hash(roomId);
     }
 
-    public static RoomBuilder newRoomBuilder() {
-        return new RoomBuilder();
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    public static final class RoomBuilder {
+    public static final class Builder {
         private UUID roomId;
         private String name;
         private Integer seats;
@@ -107,35 +107,35 @@ public class Room implements Serializable {
         private OffsetDateTime createdAt;
         private OffsetDateTime updatedAt;
 
-        private RoomBuilder() {
+        private Builder() {
         }
 
-        public RoomBuilder roomId(UUID roomId) {
+        public Builder roomId(UUID roomId) {
             this.roomId = roomId;
             return this;
         }
 
-        public RoomBuilder name(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public RoomBuilder seats(Integer seats) {
+        public Builder seats(Integer seats) {
             this.seats = seats;
             return this;
         }
 
-        public RoomBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public RoomBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public RoomBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

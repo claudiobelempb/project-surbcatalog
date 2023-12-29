@@ -24,7 +24,8 @@ public class AllocationDTO implements Serializable {
 
     }
 
-    private AllocationDTO(AllocationDTOBuilder builder){
+
+    private AllocationDTO(Builder builder) {
         allocationId = builder.allocationId;
         subject = builder.subject;
         startAt = builder.startAt;
@@ -72,11 +73,11 @@ public class AllocationDTO implements Serializable {
         return userId;
     }
 
-    public static AllocationDTOBuilder newAllocationDTO() {
-        return new AllocationDTOBuilder();
+    public static Builder newBuilderDTO() {
+        return new Builder();
     }
 
-    public static final class AllocationDTOBuilder {
+    public static final class Builder {
         private UUID allocationId;
         private String subject;
         private OffsetDateTime startAt;
@@ -87,50 +88,51 @@ public class AllocationDTO implements Serializable {
         private UUID roomId;
         private UUID userId;
 
-        private AllocationDTOBuilder() {
+        private Builder() {
         }
 
-        public AllocationDTOBuilder allocationId(UUID allocationId) {
+
+        public Builder allocationId(UUID allocationId) {
             this.allocationId = allocationId;
             return this;
         }
 
-        public AllocationDTOBuilder subject(String subject) {
+        public Builder subject(String subject) {
             this.subject = subject;
             return this;
         }
 
-        public AllocationDTOBuilder startAt(OffsetDateTime startAt) {
+        public Builder startAt(OffsetDateTime startAt) {
             this.startAt = startAt;
             return this;
         }
 
-        public AllocationDTOBuilder endAt(OffsetDateTime endAt) {
+        public Builder endAt(OffsetDateTime endAt) {
             this.endAt = endAt;
             return this;
         }
 
-        public AllocationDTOBuilder createdAt(OffsetDateTime createdAt) {
+        public Builder createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public AllocationDTOBuilder updatedAt(OffsetDateTime updatedAt) {
+        public Builder updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public AllocationDTOBuilder active(Boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
 
-        public AllocationDTOBuilder roomId(UUID roomId) {
+        public Builder roomId(UUID roomId) {
             this.roomId = roomId;
             return this;
         }
 
-        public AllocationDTOBuilder userId(UUID userId) {
+        public Builder userId(UUID userId) {
             this.userId = userId;
             return this;
         }
