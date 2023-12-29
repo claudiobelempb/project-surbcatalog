@@ -50,12 +50,12 @@ public class AppResourceAdviceExceptionHandler {
   }
 
   @ExceptionHandler(AppMessagingException.class)
-  public ResponseEntity<AppStandarError> database(AppMessagingException e, HttpServletRequest request) {
-    HttpStatus status = HttpStatus.BAD_REQUEST;
+  public ResponseEntity<AppStandarError> sendError(AppMessagingException e, HttpServletRequest request) {
+    HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
     AppStandarError err = new AppStandarError();
     err.setTimestamp(Instant.now());
     err.setStatus(status.value());
-    err.setError(AppExceptionConstants.BAD_REQUEST);
+    err.setError(AppExceptionConstants.UNPROCESSABLE_ENTITY);
     err.setMessage(e.getMessage());
     err.setPath(request.getRequestURI());
     return ResponseEntity.status(status).body(err);

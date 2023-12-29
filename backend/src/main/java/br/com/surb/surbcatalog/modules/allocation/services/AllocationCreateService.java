@@ -23,7 +23,7 @@ public class AllocationCreateService {
     private final RoomRepository roomRepository;
     private final UserRepository userRepository;
     private final AllocationValidator allocationCreateValidator;
-//    private final AllocationNotificationService allocationNotificationService;
+    private final AllocationNotificationService allocationNotificationService;
 
     public AllocationCreateService(
             AllocationRepository allocationRepository,
@@ -35,7 +35,7 @@ public class AllocationCreateService {
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
         this.allocationCreateValidator = allocationCreateValidator;
-//        this.allocationNotificationService = allocationNotificationService;
+        this.allocationNotificationService = allocationNotificationService;
     }
 
     @Transactional
@@ -44,13 +44,14 @@ public class AllocationCreateService {
                 .findById(dto.getRoomId())
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "RoomId " + dto.getRoomId()));
         User user = userRepository
-                .findById(dto.getUserId())
+                .findById(dto.getUserId().getUserId())
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "UserId " + dto.getUserId()));
 
         allocationCreateValidator.validate(dto);
         Allocation entity = createAllocationDTOToEntity(dto);
+        System.out.println("Entity: " + entity);
         allocationRepository.save(entity);
-        //allocationNotificationService.notifyAllocationCreate(entity);
-        return entityToAllocationCreateDTO(entity, room.getRoomId(), user.getUserId());
+//        allocationNotificationService.notifyAllocationCreate(entity);
+        return entityToAllocationCreateDTO(entity, room.getRoomId(), user);
     }
 }

@@ -22,9 +22,9 @@ spring:
                         clientSecret: ${CLIENT_SECRET:my-client-secret}
     email:
         host: smtp.mail.com
-        username: abc@gmail.com
-        passowrd: xyz
-        from: abc@gmail.com
+        username: claudiocardo@gmail.com
+        passowrd: Lima123@
+        from: claudiocardo@gmail.com
         properties:
             mail.transport.protocol: smtp
             mail.smtp.port: 587
@@ -40,7 +40,7 @@ logging:
 # =================================
 # = App Congig
 # =================================
-appConfig:
+app:
     maxSize: 50
     email:
         templates:

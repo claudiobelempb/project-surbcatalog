@@ -1,5 +1,7 @@
 package br.com.surb.surbcatalog.modules.allocation.dto;
 
+import br.com.surb.surbcatalog.modules.user.entities.User;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -18,7 +20,7 @@ public class AllocationDTO implements Serializable {
     private OffsetDateTime updatedAt;
     private Boolean active;
     private UUID roomId;
-    private UUID userId;
+    private User userId;
 
     public AllocationDTO() {
 
@@ -68,7 +70,7 @@ public class AllocationDTO implements Serializable {
         return roomId;
     }
 
-    public UUID getUserId() {
+    public User getUserId() {
         return userId;
     }
 
@@ -85,7 +87,7 @@ public class AllocationDTO implements Serializable {
         private OffsetDateTime updatedAt;
         private Boolean active;
         private UUID roomId;
-        private UUID userId;
+        private User userId;
 
         private AllocationDTOBuilder() {
         }
@@ -130,7 +132,7 @@ public class AllocationDTO implements Serializable {
             return this;
         }
 
-        public AllocationDTOBuilder userId(UUID userId) {
+        public AllocationDTOBuilder userId(User userId) {
             this.userId = userId;
             return this;
         }

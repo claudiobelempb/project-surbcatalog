@@ -23,11 +23,11 @@ public abstract class AllocationMapper {
                 .updatedAt(dto.getUpdatedAt())
                 .active(dto.getActive())
                 .room(Room.newRoomBuilder().roomId(dto.getRoomId()).build())
-                .user(User.newUserBuilder().userId(dto.getUserId()).build())
+                .user(User.newUserBuilder().build())
                 .build();
     }
 
-    public static AllocationDTO entityToAllocationCreateDTO(Allocation entity, UUID roomId, UUID userId) {
+    public static AllocationDTO entityToAllocationCreateDTO(Allocation entity, UUID roomId, User userId) {
         if (entity == null) {
             return null;
         }
@@ -59,7 +59,7 @@ public abstract class AllocationMapper {
                 .updatedAt(entity.getUpdatedAt())
                 .active(entity.getActive())
                 .roomId(entity.getRoom().getRoomId())
-                .userId(entity.getUser().getUserId())
+                .userId(entity.getUser())
                 .build();
     }
 
