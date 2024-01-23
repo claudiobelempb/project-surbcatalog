@@ -26,7 +26,7 @@ public class RoomUpdateService {
     public void execute(UUID roomId, RoomUpdateDTO dto){
         getActiveOrThrow(roomId);
         roomValidator.validate(roomId, dto);
-        roomRepository.update(roomId, dto.getName(), dto.getSeats());
+        roomRepository.update(roomId, dto.name(), dto.seats());
     }
 
     private Room getActiveOrThrow(UUID roomId) {

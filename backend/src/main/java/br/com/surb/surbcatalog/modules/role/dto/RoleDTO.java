@@ -1,60 +1,97 @@
 package br.com.surb.surbcatalog.modules.role.dto;
 
 import br.com.surb.surbcatalog.modules.role.entities.Role;
+import br.com.surb.surbcatalog.modules.user.dto.UserDTO;
+import br.com.surb.surbcatalog.modules.user.entities.User;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class RoleDTO implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 4481838943638259330L;
+    private static final long serialVersionUID = -1098897813427276436L;
 
     private UUID roleId;
     private String authority;
-    private Boolean active;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+    private Boolean active;
+    private final List<User> users = new ArrayList<>();
 
     public RoleDTO() {
     }
 
-    public RoleDTO(UUID roleId, String authority, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public RoleDTO(UUID roleId, String authority, OffsetDateTime createdAt, OffsetDateTime updatedAt, Boolean active) {
         this.roleId = roleId;
         this.authority = authority;
-        this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.active = active;
     }
 
     public RoleDTO(Role entity) {
         roleId = entity.getRoleId();
         authority = entity.getAuthority();
-        active = entity.getActive();
         createdAt = entity.getCreatedAt();
         updatedAt = entity.getUpdatedAt();
+        active = entity.getActive();
+    }
+
+    public RoleDTO(Role entity, List<User> users) {
+        roleId = entity.getRoleId();
+        authority = entity.getAuthority();
+        createdAt = entity.getCreatedAt();
+        updatedAt = entity.getUpdatedAt();
+        active = entity.getActive();
+        users.forEach(user -> new UserDTO(user));
     }
 
     public UUID getRoleId() {
         return roleId;
     }
 
+    public void setRoleId(UUID roleId) {
+        this.roleId = roleId;
+    }
+
     public String getAuthority() {
         return authority;
     }
 
-    public Boolean getActive() {
-        return active;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
 }

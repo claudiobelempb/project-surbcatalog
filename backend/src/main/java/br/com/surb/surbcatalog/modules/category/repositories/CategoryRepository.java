@@ -19,16 +19,4 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     Optional<Category> findByNameAndActive(String name, Boolean active);
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("UPDATE Category entity SET entity.active = false WHERE entity.categoryId = :categoryId")
-    void deactivate(@Param("categoryId") UUID categoryId);
-
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("UPDATE Category entity SET entity.active = true WHERE entity.categoryId = :categoryId")
-    void activate(@Param("categoryId") UUID categoryId);
-
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("UPDATE Category entity SET entity.name = :name WHERE entity.categoryId = :categoryId")
-    void update(@Param("categoryId") UUID categoryId, @Param("name") String name);
-
 }

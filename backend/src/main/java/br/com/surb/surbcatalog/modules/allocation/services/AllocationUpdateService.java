@@ -33,7 +33,7 @@ public class AllocationUpdateService {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
 
         Objects.requireNonNull(allocationId);
-        allocationValidator.validate(dto.getRoomId(), allocationId, dto);
+        allocationValidator.validate(dto.roomId(), allocationId, dto);
         Allocation entity = allocationRepository
                 .findById(allocationId)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + allocationId));
@@ -41,6 +41,6 @@ public class AllocationUpdateService {
             throw new AppInvalidRequestException(AppValidatorConstants.IN_THE_PAST + allocationId, appValidateErrors);
         }
         //allocationNotificationService.notifyAllocationUpdate(entity);
-        allocationRepository.update(allocationId, dto.getSubject(), dto.getStartAt(), dto.getEndAt());
+        allocationRepository.update(allocationId, dto.subject(), dto.startAt(), dto.endAt());
     }
 }

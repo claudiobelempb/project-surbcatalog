@@ -1,5 +1,6 @@
 package br.com.surb.surbcatalog.modules.category.services;
 
+import br.com.surb.surbcatalog.modules.category.entities.Category;
 import br.com.surb.surbcatalog.modules.category.repositories.CategoryRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
 import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntityNotFoundException;
@@ -20,9 +21,10 @@ public class CategoryActiveService {
     @Transactional
     public void execute(UUID categoryId) {
         Objects.requireNonNull(categoryId);
-        categoryRepository
+        Category entity = categoryRepository
                 .findByCategoryIdAndActive(categoryId, false)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + categoryId));
-        categoryRepository.activate(categoryId);
+        entity.setActive(true);
+        categoryRepository.save(entity);
     }
 }

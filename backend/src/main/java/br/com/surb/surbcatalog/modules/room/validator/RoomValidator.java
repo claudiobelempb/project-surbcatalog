@@ -23,10 +23,10 @@ public class RoomValidator {
     public void validate(RoomCreateDTO roomDTO){
         AppValidationErrors appValidateErrors = new AppValidationErrors();
         if(
-            validateName(roomDTO.getName(), appValidateErrors) &&
-            validateSeats(roomDTO.getSeats(), appValidateErrors)
+            validateName(roomDTO.name(), appValidateErrors) &&
+            validateSeats(roomDTO.seats(), appValidateErrors)
         ){
-            validateNameDuplicate(null, roomDTO.getName(), appValidateErrors);
+            validateNameDuplicate(null, roomDTO.name(), appValidateErrors);
         }
 
         AppValidatorUtils.throwOnError(appValidateErrors);
@@ -36,10 +36,10 @@ public class RoomValidator {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
         if(
             AppValidatorUtils.validateRequiredValid(roomId, "name", appValidateErrors) &&
-            validateName(dto.getName(), appValidateErrors) &&
-            validateSeats(dto.getSeats(), appValidateErrors)
+            validateName(dto.name(), appValidateErrors) &&
+            validateSeats(dto.seats(), appValidateErrors)
         ){
-            validateNameDuplicate(roomId, dto.getName(), appValidateErrors);
+            validateNameDuplicate(roomId, dto.name(), appValidateErrors);
         }
 
         AppValidatorUtils.throwOnError(appValidateErrors);

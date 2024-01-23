@@ -6,7 +6,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -33,32 +32,52 @@ public class Category implements Serializable {
     public Category() {
     }
 
-    private Category(Builder builder) {
-        categoryId = builder.categoryId;
-        name = builder.name;
-        createdAt = builder.createdAt;
-        updatedAt = builder.updatedAt;
-        active = builder.active;
+    public Category(UUID categoryId, String name, OffsetDateTime createdAt, OffsetDateTime updatedAt, Boolean active) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.active = active;
     }
 
     public UUID getCategoryId() {
         return categoryId;
     }
 
+    public void setCategoryId(UUID categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public Boolean getActive() {
         return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @PrePersist
@@ -72,9 +91,8 @@ public class Category implements Serializable {
         }
     }
 
-    @LastModifiedDate
+    @PreUpdate
     public void preUpdate() {
-        System.out.println("preUpdate");
         updatedAt = AppDateUtils.now();
     }
 
@@ -93,47 +111,4 @@ public class Category implements Serializable {
         return categoryId.hashCode();
     }
 
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
-    public static final class Builder {
-        private UUID categoryId;
-        private String name;
-        private OffsetDateTime createdAt;
-        private OffsetDateTime updatedAt;
-        private Boolean active;
-
-        public Builder() {
-        }
-
-        public Builder categoryId(UUID categoryId) {
-            this.categoryId = categoryId;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        public Builder active(Boolean active) {
-            this.active = active;
-            return this;
-        }
-
-        public Category build() {
-            return new Category(this);
-        }
-    }
 }

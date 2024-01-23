@@ -26,8 +26,8 @@ public class AllocationValidator {
 
     public void validate(AllocationCreateDTO dto) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
-        validateSubject(dto.getSubject(), appValidateErrors);
-        validateDates(dto.getRoomId(), dto.getStartAt(), dto.getEndAt(), appValidateErrors);
+        validateSubject(dto.subject(), appValidateErrors);
+        validateDates(dto.roomId(), dto.startAt(), dto.endAt(), appValidateErrors);
 
         AppValidatorUtils.throwOnError(appValidateErrors);
     }
@@ -35,8 +35,8 @@ public class AllocationValidator {
     public void validate(UUID roomId, UUID allocationId, AllocationUpdateDTO dto) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
         AppValidatorUtils.validateRequiredValid(allocationId, "allocationId", appValidateErrors);
-        validateSubject(dto.getSubject(), appValidateErrors);
-        validateDates(roomId, dto.getStartAt(), dto.getEndAt(), appValidateErrors);
+        validateSubject(dto.subject(), appValidateErrors);
+        validateDates(roomId, dto.startAt(), dto.endAt(), appValidateErrors);
 
         AppValidatorUtils.throwOnError(appValidateErrors);
     }

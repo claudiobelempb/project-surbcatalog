@@ -22,12 +22,10 @@ import static br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils.DEFAULT_TIMEZ
 @Service
 public class AllocationFindAllPageService {
     private final AllocationRepository allocationRepository;
-    private final AllocationMapper allocationMapper;
     private final int maxSize;
 
-    public AllocationFindAllPageService(AllocationRepository allocationRepository, AllocationMapper allocationMapper, @Value(AppConfigConstants.ALLOCATION_MAX_SIZE) int maxSize) {
+    public AllocationFindAllPageService(AllocationRepository allocationRepository, @Value(AppConfigConstants.ALLOCATION_MAX_SIZE) int maxSize) {
         this.allocationRepository = allocationRepository;
-        this.allocationMapper = allocationMapper;
         this.maxSize = maxSize;
     }
 

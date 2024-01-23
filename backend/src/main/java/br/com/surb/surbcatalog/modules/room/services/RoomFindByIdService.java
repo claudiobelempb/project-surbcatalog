@@ -26,6 +26,6 @@ public class RoomFindByIdService {
         Room room = roomRepository
                 .findByRoomIdAndActive(roomId, true)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + roomId));
-        return RoomMapper.fromEntityToDTO(room);
+        return RoomMapper.fromDTO(room);
     }
 }

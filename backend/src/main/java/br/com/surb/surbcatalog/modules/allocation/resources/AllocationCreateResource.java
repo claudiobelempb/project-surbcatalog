@@ -30,9 +30,9 @@ public class AllocationCreateResource {
 
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<AllocationDTO>> handle(@RequestBody AllocationCreateDTO dto) {
-        AllocationDTO allocationDTO = allocationCreateService.execute(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{allocationId}").buildAndExpand(allocationDTO.getAllocationId()).toUri();
+    public CompletableFuture<ResponseEntity<AllocationCreateDTO>> handle(@RequestBody AllocationCreateDTO dto) {
+        AllocationCreateDTO allocationDTO = allocationCreateService.execute(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{allocationId}").buildAndExpand(allocationDTO.allocationId()).toUri();
         return supplyAsync(() -> allocationDTO, executor).thenApply((r) -> ResponseEntity.created(uri).body(allocationDTO));
     }
 }

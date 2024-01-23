@@ -1,13 +1,9 @@
 package br.com.surb.surbcatalog.modules.room.dto;
 
-import java.io.Serial;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 //@RoomCreateValid
-public class RoomCreateDTO extends RoomDTO {
-
-    @Serial
-    private static final long serialVersionUID = -6069228199430630795L;
-
-    public RoomCreateDTO(){}
-
+public record RoomCreateDTO(UUID roomId, String name, Integer seats, OffsetDateTime createdAt, OffsetDateTime updatedAt,
+                            Boolean active) {
 }

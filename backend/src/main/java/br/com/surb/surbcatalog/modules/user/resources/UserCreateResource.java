@@ -28,9 +28,9 @@ public class UserCreateResource {
     }
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<UserDTO>> handle(@RequestBody UserCreateDTO dto) {
-        UserDTO userDTO = userCreateService.execute(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{useId}").buildAndExpand(userDTO.getUserId()).toUri();
-        return supplyAsync(() -> userDTO, executor).thenApply((r) -> ResponseEntity.created(uri).body(userDTO));
+    public CompletableFuture<ResponseEntity<UserCreateDTO>> handle(@RequestBody UserCreateDTO dto) {
+        UserCreateDTO userCreateDTO = userCreateService.execute(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{useId}").buildAndExpand(userCreateDTO.getUserId()).toUri();
+        return supplyAsync(() -> userCreateDTO, executor).thenApply((r) -> ResponseEntity.created(uri).body(userCreateDTO));
     }
 }

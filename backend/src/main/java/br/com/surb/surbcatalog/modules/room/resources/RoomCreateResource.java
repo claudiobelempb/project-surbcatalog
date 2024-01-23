@@ -29,9 +29,9 @@ public class RoomCreateResource {
     }
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<RoomDTO>> handle(@Valid @RequestBody RoomCreateDTO dto){
-        RoomDTO roomDTO = roomCreateService.execute(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{roomId}").buildAndExpand(roomDTO.getRoomId()).toUri();
-        return supplyAsync(() -> roomDTO, controllersExecutor).thenApply((r) -> ResponseEntity.created(uri).body(roomDTO));
+    public CompletableFuture<ResponseEntity<RoomCreateDTO>> handle(@Valid @RequestBody RoomCreateDTO dto) {
+        RoomCreateDTO roomCreateDTO = roomCreateService.execute(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{roomId}").buildAndExpand(roomCreateDTO.roomId()).toUri();
+        return supplyAsync(() -> roomCreateDTO, controllersExecutor).thenApply((r) -> ResponseEntity.created(uri).body(roomCreateDTO));
     }
 }

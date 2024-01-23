@@ -27,32 +27,52 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    private Role(Builder builder) {
-        roleId = builder.roleId;
-        authority = builder.authority;
-        active = builder.active;
-        createdAt = builder.createdAt;
-        updatedAt = builder.updatedAt;
+    public Role(UUID roleId, String authority, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+        this.roleId = roleId;
+        this.authority = authority;
+        this.active = active;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public UUID getRoleId() {
         return roleId;
     }
 
+    public void setRoleId(UUID roleId) {
+        this.roleId = roleId;
+    }
+
     public String getAuthority() {
         return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     public Boolean getActive() {
         return active;
     }
 
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @PrePersist
@@ -78,49 +98,5 @@ public class Role implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(roleId);
-    }
-
-    public static Builder newBuild() {
-        return new Builder();
-    }
-
-    public static final class Builder {
-        private UUID roleId;
-        private String authority;
-        private Boolean active;
-        private OffsetDateTime createdAt;
-        private OffsetDateTime updatedAt;
-
-        private Builder() {
-        }
-
-        public Builder roleId(UUID roleId) {
-            this.roleId = roleId;
-            return this;
-        }
-
-        public Builder authority(String authority) {
-            this.authority = authority;
-            return this;
-        }
-
-        public Builder active(Boolean active) {
-            this.active = active;
-            return this;
-        }
-
-        public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        public Role build() {
-            return new Role(this);
-        }
     }
 }

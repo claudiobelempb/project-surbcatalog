@@ -1,6 +1,7 @@
 package br.com.surb.surbcatalog.modules.category.services;
 
-import br.com.surb.surbcatalog.modules.category.dto.CategoryUpdateDTO;
+import br.com.surb.surbcatalog.modules.category.dto.CategoryDTO;
+import br.com.surb.surbcatalog.modules.category.entities.Category;
 import br.com.surb.surbcatalog.modules.category.repositories.CategoryRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
 import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntityNotFoundException;
@@ -20,13 +21,15 @@ public class CategoryUpdateService {
     }
 
     @Transactional
-    public void execute(UUID categoryId, CategoryUpdateDTO dto) {
+    public CategoryDTO execute(UUID categoryId, CategoryDTO dto) {
         try {
             Objects.requireNonNull(categoryId);
-            categoryRepository
+            Category entity = categoryRepository
                     .findByCategoryIdAndActive(categoryId, true)
                     .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + categoryId));
-            categoryRepository.update(categoryId, dto.name());
+            entity.setName(dto.getName());
+            categoryRepository.save(entity);
+            return new CategoryDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + categoryId);
         }
