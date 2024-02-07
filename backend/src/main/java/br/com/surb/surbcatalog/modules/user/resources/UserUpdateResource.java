@@ -2,6 +2,7 @@ package br.com.surb.surbcatalog.modules.user.resources;
 
 import br.com.surb.surbcatalog.modules.user.dto.UserUpdateDTO;
 import br.com.surb.surbcatalog.modules.user.services.UserUpdateService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class UserUpdateResource {
         this.executor = executor;
     }
 
-    @PutMapping(value = "/{categoryId}")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId, @RequestBody UserUpdateDTO dto) {
+    @PutMapping(value = "/{userId}")
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId, @Valid @RequestBody UserUpdateDTO dto) {
         return CompletableFuture
                 .runAsync(() -> userUpdateService.execute(userId, dto), executor)
                 .thenApply((__) -> ResponseEntity.noContent().build());

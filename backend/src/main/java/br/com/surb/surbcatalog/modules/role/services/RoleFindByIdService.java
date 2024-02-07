@@ -6,6 +6,7 @@ import br.com.surb.surbcatalog.modules.role.repositories.RoleRepository;
 import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
 import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -18,11 +19,13 @@ public class RoleFindByIdService {
     public RoleFindByIdService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
+
+    @Transactional(readOnly = true)
     public RoleDTO execute(UUID roleId){
         Objects.requireNonNull(roleId);
         Role entity = roleRepository
                 .findByRoleIdAndActive(roleId, true)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.NOT_FOUND + roleId));
-        return new RoleDTO(entity);
+        return new RoleDTO(entity, entity.getUsers());
     }
 }

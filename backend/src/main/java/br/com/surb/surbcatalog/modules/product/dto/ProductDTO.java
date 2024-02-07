@@ -3,6 +3,11 @@ package br.com.surb.surbcatalog.modules.product.dto;
 import br.com.surb.surbcatalog.modules.category.dto.CategoryDTO;
 import br.com.surb.surbcatalog.modules.category.entities.Category;
 import br.com.surb.surbcatalog.modules.product.entities.Product;
+import br.com.surb.surbcatalog.shared.AppConstants.AppValidatorConstants;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,13 +23,18 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 396999032983672409L;
 
     private UUID productId;
+    @Size(min = 5, max = 60, message = AppValidatorConstants.MIN_MAX)
+    @NotBlank(message = AppValidatorConstants.REQUIRED_FIELD)
     private String name;
+    @NotBlank(message = AppValidatorConstants.REQUIRED_FIELD)
     private String description;
+    @Positive(message = AppValidatorConstants.REQUIRED_PRICE_POSITIVO)
     private Double price;
     private Double discount;
     private Integer minStock;
     private Integer maxStock;
     private String imgUri;
+    @PastOrPresent(message = AppValidatorConstants.REQUIRED_DATA_PRESENT)
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
     private Boolean active;

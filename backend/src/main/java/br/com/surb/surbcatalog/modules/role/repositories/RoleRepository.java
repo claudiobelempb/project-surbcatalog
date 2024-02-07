@@ -1,6 +1,7 @@
 package br.com.surb.surbcatalog.modules.role.repositories;
 
 import br.com.surb.surbcatalog.modules.role.entities.Role;
+import br.com.surb.surbcatalog.modules.user.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,7 @@ public interface RoleRepository extends JpaRepository<Role, UUID> {
     boolean existsByRoleId(UUID roleId);
 
     Optional<Role> findByRoleIdAndActive(UUID roleId, Boolean active);
+    Optional<Role> findByAuthorityAndActive(String email, Boolean active);
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE Role entity SET entity.active = false WHERE entity.roleId = :roleId")

@@ -1,15 +1,14 @@
 package br.com.surb.surbcatalog.modules.user.services;
 
-import br.com.surb.surbcatalog.modules.user.dto.UserCreateDTO;
+import br.com.surb.surbcatalog.modules.user.dto.UserDTO;
 import br.com.surb.surbcatalog.modules.user.entities.User;
-import br.com.surb.surbcatalog.modules.user.mapper.UserCreateMapper;
 import br.com.surb.surbcatalog.modules.user.repositories.UserRepository;
+import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
 import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,11 +20,11 @@ public class UserFindByIdService {
     }
 
     @Transactional(readOnly = true)
-    public UserCreateDTO execute(UUID userId) {
+    public UserDTO execute(UUID userId) {
         Objects.requireNonNull(userId);
-        Optional<User> obj = userRepository.findById(userId);
-        User user = obj.orElseThrow(() -> new AppEntityNotFoundException("Entity not found" + userId));
-        return UserCreateMapper.fromDTO(user);
+        User entity = userRepository.findByUserIdAndActive(userId, true)
+                .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.NOT_FOUND + userId));
+        return new UserDTO(entity);
     }
 
 }

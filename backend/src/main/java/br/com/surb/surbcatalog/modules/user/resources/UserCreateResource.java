@@ -3,6 +3,7 @@ package br.com.surb.surbcatalog.modules.user.resources;
 import br.com.surb.surbcatalog.modules.user.dto.UserCreateDTO;
 import br.com.surb.surbcatalog.modules.user.dto.UserDTO;
 import br.com.surb.surbcatalog.modules.user.services.UserCreateService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,9 +29,9 @@ public class UserCreateResource {
     }
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<UserCreateDTO>> handle(@RequestBody UserCreateDTO dto) {
-        UserCreateDTO userCreateDTO = userCreateService.execute(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{useId}").buildAndExpand(userCreateDTO.getUserId()).toUri();
-        return supplyAsync(() -> userCreateDTO, executor).thenApply((r) -> ResponseEntity.created(uri).body(userCreateDTO));
+    public CompletableFuture<ResponseEntity<UserDTO>> handle(@Valid @RequestBody UserCreateDTO dto) {
+        UserDTO userDTO = userCreateService.execute(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{useId}").buildAndExpand(userDTO.getUserId()).toUri();
+        return supplyAsync(() -> userDTO, executor).thenApply((r) -> ResponseEntity.created(uri).body(userDTO));
     }
 }

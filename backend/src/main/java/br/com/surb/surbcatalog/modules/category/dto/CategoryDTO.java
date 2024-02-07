@@ -1,8 +1,12 @@
 package br.com.surb.surbcatalog.modules.category.dto;
 
 import br.com.surb.surbcatalog.modules.category.entities.Category;
+import br.com.surb.surbcatalog.modules.category.validation.CategoryCreateValid;
 import br.com.surb.surbcatalog.modules.product.dto.ProductDTO;
 import br.com.surb.surbcatalog.modules.product.entities.Product;
+import br.com.surb.surbcatalog.shared.AppConstants.AppValidatorConstants;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,12 +15,15 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@CategoryCreateValid
 public class CategoryDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -4931407971722715507L;
 
     private UUID categoryId;
+    @NotBlank(message = AppValidatorConstants.REQUIRED_FIELD)
+    @Size(min = 3, max = 15, message = AppValidatorConstants.BETWEEN_LENGTH)
     private String name;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;

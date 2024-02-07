@@ -5,10 +5,7 @@ import br.com.surb.surbcatalog.modules.allocation.dto.AllocationDTO;
 import br.com.surb.surbcatalog.modules.allocation.dto.AllocationUpdateDTO;
 import br.com.surb.surbcatalog.modules.allocation.entities.Allocation;
 import br.com.surb.surbcatalog.modules.room.entities.Room;
-import br.com.surb.surbcatalog.modules.user.entities.User;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class AllocationMapper {
@@ -91,7 +88,7 @@ public class AllocationMapper {
         entity.createdAt(dto.createdAt());
         entity.updatedAt(dto.updatedAt());
         entity.room(Room.newBuilder().roomId(dto.roomId()).build());
-        entity.user(User.newBuilder().userId(dto.userId()).build());
+
 
         return entity.build();
     }

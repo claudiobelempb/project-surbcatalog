@@ -2,7 +2,6 @@ package br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsResource;
 
 import br.com.surb.surbcatalog.shared.AppConstants.AppExceptionConstants;
 import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.*;
-import br.com.surb.surbcatalog.shared.AppValidator.AppValidError;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidationError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -50,7 +49,7 @@ public class AppResourceAdviceExceptionHandler {
         err.setPath(request.getRequestURI());
 
         for (FieldError field : e.getBindingResult().getFieldErrors()) {
-            err.addError(field.getField(), field.getField(), field.getDefaultMessage());
+            err.addError(field.getField(), field.getDefaultMessage());
         }
         return ResponseEntity.status(status).body(err);
 
@@ -68,23 +67,6 @@ public class AppResourceAdviceExceptionHandler {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
         AppOAuthCustomError customError = new AppOAuthCustomError(AppExceptionConstants.UNAUTHORIZED, e.getMessage());
         return ResponseEntity.status(status).body(customError);
-    }
-
-    @ExceptionHandler(AppInvalidRequestException.class)
-    public ResponseEntity<AppValidationError> validation(
-            AppInvalidRequestException e, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        AppValidationError err = new AppValidationError();
-        err.setTimestamp(Instant.now());
-        err.setStatus(status.value());
-        err.setError(AppExceptionConstants.UNPROCESSABLE_ENTITY);
-        err.setMessage(e.getMessage());
-        err.setPath(request.getRequestURI());
-
-        for (AppValidError field : e.getValidationErrors()) {
-            err.addError(field.getField(), field.getField(), field.getErrorCode());
-        }
-        return ResponseEntity.status(status).body(err);
     }
 
     private static ResponseEntity<AppStandarError> getAppStandarErrorResponseEntity(RuntimeException e, HttpServletRequest request, AppStandarError err, HttpStatus status, String errorMsg) {

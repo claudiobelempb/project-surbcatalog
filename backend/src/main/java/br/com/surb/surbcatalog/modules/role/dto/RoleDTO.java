@@ -7,8 +7,8 @@ import br.com.surb.surbcatalog.modules.user.entities.User;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class RoleDTO implements Serializable {
@@ -21,7 +21,7 @@ public class RoleDTO implements Serializable {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
     private Boolean active;
-    private final List<User> users = new ArrayList<>();
+    private final Set<UserDTO> users = new HashSet<>();
 
     public RoleDTO() {
     }
@@ -42,13 +42,9 @@ public class RoleDTO implements Serializable {
         active = entity.getActive();
     }
 
-    public RoleDTO(Role entity, List<User> users) {
-        roleId = entity.getRoleId();
-        authority = entity.getAuthority();
-        createdAt = entity.getCreatedAt();
-        updatedAt = entity.getUpdatedAt();
-        active = entity.getActive();
-        users.forEach(user -> new UserDTO(user));
+    public RoleDTO(Role entity, Set<User> users) {
+        this(entity);
+        users.forEach(user -> this.users.add(new UserDTO(user)));
     }
 
     public UUID getRoleId() {
@@ -91,7 +87,7 @@ public class RoleDTO implements Serializable {
         this.active = active;
     }
 
-    public List<User> getUsers() {
+    public Set<UserDTO> getUsers() {
         return users;
     }
 }

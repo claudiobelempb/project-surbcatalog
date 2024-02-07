@@ -1,13 +1,15 @@
 package br.com.surb.surbcatalog.modules.category.entities;
 
+import br.com.surb.surbcatalog.modules.product.entities.Product;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +30,9 @@ public class Category implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private OffsetDateTime updatedAt;
     private Boolean active;
+
+    @ManyToMany(mappedBy = "categories")
+    private final Set<Product> products = new HashSet<>();
 
     public Category() {
     }
@@ -78,6 +83,10 @@ public class Category implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 
     @PrePersist

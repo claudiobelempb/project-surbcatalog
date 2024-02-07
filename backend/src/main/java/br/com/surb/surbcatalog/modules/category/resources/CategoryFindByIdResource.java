@@ -1,7 +1,7 @@
 package br.com.surb.surbcatalog.modules.category.resources;
 
 import br.com.surb.surbcatalog.modules.category.dto.CategoryDTO;
-import br.com.surb.surbcatalog.modules.category.services.CategoryFindByService;
+import br.com.surb.surbcatalog.modules.category.services.CategoryFindByIdService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,17 +19,17 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 @RequestMapping(value = "/categories")
 public class CategoryFindByIdResource {
 
-    private final CategoryFindByService categoryFindByService;
+    private final CategoryFindByIdService categoryFindByIdService;
     private final Executor executor;
 
-    public CategoryFindByIdResource(CategoryFindByService categoryFindByService, Executor executor) {
-        this.categoryFindByService = categoryFindByService;
+    public CategoryFindByIdResource(CategoryFindByIdService categoryFindByIdService, Executor executor) {
+        this.categoryFindByIdService = categoryFindByIdService;
         this.executor = executor;
     }
 
     @GetMapping(value = "/{categoryId}")
     public CompletableFuture<ResponseEntity<CategoryDTO>> handle(@PathVariable UUID categoryId) {
         Objects.isNull(categoryId);
-        return supplyAsync(() -> categoryFindByService.execute(categoryId), executor).thenApply((category) -> ResponseEntity.ok().body(category));
+        return supplyAsync(() -> categoryFindByIdService.execute(categoryId), executor).thenApply((category) -> ResponseEntity.ok().body(category));
     }
 }

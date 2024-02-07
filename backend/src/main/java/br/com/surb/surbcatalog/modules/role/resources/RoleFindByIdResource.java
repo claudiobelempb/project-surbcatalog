@@ -17,11 +17,11 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 @RestController
 @RequestMapping(value = "/roles")
-public class RoleFindByResource {
+public class RoleFindByIdResource {
     private final RoleFindByIdService roleFindByIdService;
     private final Executor executor;
 
-    public RoleFindByResource(RoleFindByIdService roleFindByIdService, Executor executor) {
+    public RoleFindByIdResource(RoleFindByIdService roleFindByIdService, Executor executor) {
         this.roleFindByIdService = roleFindByIdService;
         this.executor = executor;
     }

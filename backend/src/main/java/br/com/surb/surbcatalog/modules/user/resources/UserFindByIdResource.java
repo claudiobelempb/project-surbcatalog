@@ -1,6 +1,6 @@
 package br.com.surb.surbcatalog.modules.user.resources;
 
-import br.com.surb.surbcatalog.modules.user.dto.UserCreateDTO;
+import br.com.surb.surbcatalog.modules.user.dto.UserDTO;
 import br.com.surb.surbcatalog.modules.user.services.UserFindByIdService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class UserFindByIdResource {
     }
 
     @GetMapping(value = "/{userId}")
-    public CompletableFuture<ResponseEntity<UserCreateDTO>> handle(@PathVariable UUID userId) {
+    public CompletableFuture<ResponseEntity<UserDTO>> handle(@PathVariable UUID userId) {
         return supplyAsync(() -> userFindByIdService.execute(userId), executor).thenApply((user) -> ResponseEntity.ok().body(user));
     }
 }

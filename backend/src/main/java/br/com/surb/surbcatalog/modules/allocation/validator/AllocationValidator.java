@@ -29,21 +29,21 @@ public class AllocationValidator {
         validateSubject(dto.subject(), appValidateErrors);
         validateDates(dto.roomId(), dto.startAt(), dto.endAt(), appValidateErrors);
 
-        AppValidatorUtils.throwOnError(appValidateErrors);
+//        AppValidatorUtils.throwOnError(appValidateErrors);
     }
 
     public void validate(UUID roomId, UUID allocationId, AllocationUpdateDTO dto) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
-        AppValidatorUtils.validateRequiredValid(allocationId, "allocationId", appValidateErrors);
+        AppValidatorUtils.validateRequired(allocationId, "allocationId", appValidateErrors);
         validateSubject(dto.subject(), appValidateErrors);
         validateDates(roomId, dto.startAt(), dto.endAt(), appValidateErrors);
 
-        AppValidatorUtils.throwOnError(appValidateErrors);
+//        AppValidatorUtils.throwOnError(appValidateErrors);
     }
 
     private static void validateSubject(String subject, AppValidationErrors appValidateErrors) {
 
-        AppValidatorUtils.validateRequiredValid(subject, "subject", appValidateErrors);
+        AppValidatorUtils.validateRequired(subject, "subject", appValidateErrors);
         AppValidatorUtils.validateMaxLengthValid(subject, "subject", 60, appValidateErrors);
         AppValidatorUtils.validateMinLengthValid(subject, "subject", 5, appValidateErrors);
 
@@ -60,8 +60,8 @@ public class AllocationValidator {
 
     private static boolean validateDatesPresent(OffsetDateTime startAt, OffsetDateTime endAt, AppValidationErrors appValidationErrors) {
         return (
-                AppValidatorUtils.validateRequiredValid(startAt, "startAt", appValidationErrors) &&
-                        AppValidatorUtils.validateRequiredValid(endAt, "endAt", appValidationErrors)
+                AppValidatorUtils.validateRequired(startAt, "startAt", appValidationErrors) &&
+                        AppValidatorUtils.validateRequired(endAt, "endAt", appValidationErrors)
         );
     }
 

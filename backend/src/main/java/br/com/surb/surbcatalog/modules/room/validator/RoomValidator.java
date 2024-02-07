@@ -20,52 +20,52 @@ public class RoomValidator {
         this.roomRepository = roomRepository;
     }
 
-    public void validate(RoomCreateDTO roomDTO){
+    public void validate(RoomCreateDTO roomDTO) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
-        if(
-            validateName(roomDTO.name(), appValidateErrors) &&
-            validateSeats(roomDTO.seats(), appValidateErrors)
-        ){
+        if (
+                validateName(roomDTO.name(), appValidateErrors) &&
+                        validateSeats(roomDTO.seats(), appValidateErrors)
+        ) {
             validateNameDuplicate(null, roomDTO.name(), appValidateErrors);
         }
 
-        AppValidatorUtils.throwOnError(appValidateErrors);
+//        AppValidatorUtils.throwOnError(appValidateErrors);
     }
 
-    public void validate(UUID roomId, RoomUpdateDTO dto){
+    public void validate(UUID roomId, RoomUpdateDTO dto) {
         AppValidationErrors appValidateErrors = new AppValidationErrors();
-        if(
-            AppValidatorUtils.validateRequiredValid(roomId, "name", appValidateErrors) &&
-            validateName(dto.name(), appValidateErrors) &&
-            validateSeats(dto.seats(), appValidateErrors)
-        ){
+        if (
+                AppValidatorUtils.validateRequired(roomId, "name", appValidateErrors) &&
+                        validateName(dto.name(), appValidateErrors) &&
+                        validateSeats(dto.seats(), appValidateErrors)
+        ) {
             validateNameDuplicate(roomId, dto.name(), appValidateErrors);
         }
 
-        AppValidatorUtils.throwOnError(appValidateErrors);
+//        AppValidatorUtils.throwOnError(appValidateErrors);
     }
 
     private static boolean validateName(String name, AppValidationErrors appValidateErrors) {
         return (
-            AppValidatorUtils.validateRequiredValid(name, "name", appValidateErrors) &&
-            AppValidatorUtils.validateMaxLengthValid(name, "name", 20, appValidateErrors) &&
-            AppValidatorUtils.validateMinLengthValid(name, "name", 5, appValidateErrors)
+                AppValidatorUtils.validateRequired(name, "name", appValidateErrors) &&
+                        AppValidatorUtils.validateMaxLengthValid(name, "name", 20, appValidateErrors) &&
+                        AppValidatorUtils.validateMinLengthValid(name, "name", 5, appValidateErrors)
         );
     }
 
     private static boolean validateSeats(Integer value, AppValidationErrors appValidateErrors) {
         return (
-            AppValidatorUtils.validateRequiredValid(value, "seats", appValidateErrors) &&
-            AppValidatorUtils.validateMaxValueValid(value, "seats", 20, appValidateErrors) &&
-            AppValidatorUtils.validateMinValueValid(value, "seats", 1, appValidateErrors)
+                AppValidatorUtils.validateRequired(value, "seats", appValidateErrors) &&
+                        AppValidatorUtils.validateMaxValueValid(value, "seats", 20, appValidateErrors) &&
+                        AppValidatorUtils.validateMinValueValid(value, "seats", 1, appValidateErrors)
         );
     }
 
-    private void validateNameDuplicate(UUID roomIdToExclude, String name, AppValidationErrors appValidationErrors){
+    private void validateNameDuplicate(UUID roomIdToExclude, String name, AppValidationErrors appValidationErrors) {
         roomRepository
                 .findByNameAndActive(name, true)
                 .ifPresent(room -> {
-                    if(!Objects.isNull(roomIdToExclude) && !Objects.equals(room.getRoomId(), roomIdToExclude)) {
+                    if (!Objects.isNull(roomIdToExclude) && !Objects.equals(room.getRoomId(), roomIdToExclude)) {
                         appValidationErrors.addErrors("name", AppValidatorConstants.REQUIRED_EXIST);
                     }
                 });

@@ -89,7 +89,6 @@ public class AllocationCreateMapper {
         entity.createdAt(dto.createdAt());
         entity.updatedAt(dto.updatedAt());
         entity.room(Room.newBuilder().roomId(dto.roomId()).build());
-        entity.user(User.newBuilder().userId(dto.userId()).build());
 
         return entity.build();
     }

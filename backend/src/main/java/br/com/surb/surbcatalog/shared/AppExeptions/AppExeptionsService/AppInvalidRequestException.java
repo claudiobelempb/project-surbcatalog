@@ -1,7 +1,6 @@
 package br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService;
 
 
-import br.com.surb.surbcatalog.shared.AppConstants.AppValidatorConstants;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidError;
 import br.com.surb.surbcatalog.shared.AppValidator.AppValidationErrors;
 

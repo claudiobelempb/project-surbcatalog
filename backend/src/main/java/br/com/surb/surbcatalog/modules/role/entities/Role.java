@@ -1,17 +1,18 @@
 package br.com.surb.surbcatalog.modules.role.entities;
 
+import br.com.surb.surbcatalog.modules.user.entities.User;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_role")
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
 
     @Serial
     private static final long serialVersionUID = -5041371626608434459L;
@@ -23,6 +24,9 @@ public class Role implements Serializable {
     private Boolean active;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+
+    @ManyToMany(mappedBy = "roles")
+    private final Set<User> users = new HashSet<>();
 
     public Role() {
     }
@@ -43,6 +47,7 @@ public class Role implements Serializable {
         this.roleId = roleId;
     }
 
+    @Override
     public String getAuthority() {
         return authority;
     }
@@ -73,6 +78,10 @@ public class Role implements Serializable {
 
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 
     @PrePersist

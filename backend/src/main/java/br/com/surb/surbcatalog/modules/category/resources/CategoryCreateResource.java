@@ -2,6 +2,7 @@ package br.com.surb.surbcatalog.modules.category.resources;
 
 import br.com.surb.surbcatalog.modules.category.dto.CategoryDTO;
 import br.com.surb.surbcatalog.modules.category.services.CategoryCreateService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class CategoryCreateResource {
     }
 
     @PostMapping
-    public CompletableFuture<ResponseEntity<CategoryDTO>> handle(@RequestBody CategoryDTO dto) {
+    public CompletableFuture<ResponseEntity<CategoryDTO>> handle(@Valid @RequestBody CategoryDTO dto) {
         CategoryDTO categoryDTO = categoryCreateService.execute(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{categoryId}").buildAndExpand(categoryDTO.getCategoryId()).toUri();
         return supplyAsync(() -> categoryDTO, executor).thenApply((category) -> ResponseEntity.created(uri).body(categoryDTO));

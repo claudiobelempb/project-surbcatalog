@@ -12,11 +12,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class CategoryFindByService {
+public class CategoryFindByIdService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryFindByService(CategoryRepository categoryRepository) {
+    public CategoryFindByIdService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
@@ -25,6 +25,6 @@ public class CategoryFindByService {
         Objects.requireNonNull(categoryId);
         Category entity = categoryRepository.findByCategoryIdAndActive(categoryId, true)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.NOT_FOUND + categoryId));
-        return new CategoryDTO(entity);
+        return new CategoryDTO(entity, entity.getProducts());
     }
 }
