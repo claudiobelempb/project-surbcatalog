@@ -3,6 +3,7 @@ package br.com.surb.surbcatalog.modules.user.entities;
 import br.com.surb.surbcatalog.modules.role.entities.Role;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -124,6 +125,10 @@ public class User implements Serializable, UserDetails {
         return roles;
     }
 
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
     @PrePersist
     public void prePersist() {
         apiKey = UUID.randomUUID();
@@ -184,4 +189,19 @@ public class User implements Serializable, UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", apiKey=" + apiKey +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", roles=" + roles +
+                '}';
+    }
 }

@@ -20,6 +20,7 @@ public class Role implements Serializable, GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID roleId;
+    @Column(unique = true)
     private String authority;
     private Boolean active;
     private OffsetDateTime createdAt;
@@ -37,6 +38,11 @@ public class Role implements Serializable, GrantedAuthority {
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Role(UUID roleId, String authoriry) {
+        this.roleId = roleId;
+        this.authority = authoriry;
     }
 
     public UUID getRoleId() {

@@ -4,6 +4,7 @@ import br.com.surb.surbcatalog.modules.user.dto.UserUpdateDTO;
 import br.com.surb.surbcatalog.modules.user.services.UserUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class UserUpdateResource {
     }
 
     @PutMapping(value = "/{userId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId, @Valid @RequestBody UserUpdateDTO dto) {
         return CompletableFuture
                 .runAsync(() -> userUpdateService.execute(userId, dto), executor)

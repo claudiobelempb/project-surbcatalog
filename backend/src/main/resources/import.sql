@@ -3,7 +3,7 @@ INSERT INTO tb_role (role_id, authority, created_at, active) VALUES('be748452-8e
 INSERT INTO tb_role (role_id, authority, created_at, active) VALUES('f1d27476-fda1-4376-83a3-7281df8cef16', 'ROLE_OPERATOR', NOW(), 'TRUE');
 
 --tb_user
-INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, password, active, created_at) VALUES('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'ecf978fc-2087-440c-848b-2b0452c00b31', 'Claudio', 'Cardoso', 'claudio.c.lima@hormail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1, NOW());
+INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, password, active, created_at) VALUES('d477f8ca-ff5b-4eff-a66e-fd83b102371b', 'ecf978fc-2087-440c-848b-2b0452c00b31', 'Claudio', 'Cardoso', 'claudio.c.lima@hotmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1, NOW());
 INSERT INTO tb_user (user_id, api_key, first_name, last_name, email, password, active, created_at) VALUES('84794b77-dd91-4050-9831-7de6007d103e', 'd4c0e714-1297-4c11-9805-f6ad10cab6bf', 'Alex', 'Brown', 'alex@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1, NOW());
 
 --tb_user_role
@@ -60,3 +60,7 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES ('66c6f671-c2e1
 --INSERT INTO tb_product_category (product_id, category_id) VALUES ('7a384618-b209-4978-b611-85e0026102e8', 'be6caa0c-00b2-4456-90e0-612e005810d1');
 --INSERT INTO tb_product_category (product_id, category_id) VALUES ('40b302b2-31ff-451f-85c2-c7a163bf41af', 'be6caa0c-00b2-4456-90e0-612e005810d1');
 --INSERT INTO tb_product_category (product_id, category_id) VALUES ('51db1297-5173-4f3d-a327-478c0101aee4', 'edbab41d-80ce-4bec-a166-f129a6b295fc');
+
+--tb_image
+INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active) VALUES ('31a451c0-7ce4-46b7-af65-091e1867e082', 'image 01', 'PNG', 'teste', 1000L, now(), 1);
+INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active) VALUES ('73c1d16c-7c8e-442e-9432-62bfbc5e17fd', 'image 02', 'JPG', 'teste', 1000L, now(), 1);

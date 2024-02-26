@@ -94,3 +94,6 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES ('66c6f671-c2e1
 INSERT INTO tb_product_category (product_id, category_id) VALUES ('7a384618-b209-4978-b611-85e0026102e8', 'be6caa0c-00b2-4456-90e0-612e005810d1');
 INSERT INTO tb_product_category (product_id, category_id) VALUES ('40b302b2-31ff-451f-85c2-c7a163bf41af', 'be6caa0c-00b2-4456-90e0-612e005810d1');
 INSERT INTO tb_product_category (product_id, category_id) VALUES ('51db1297-5173-4f3d-a327-478c0101aee4', 'edbab41d-80ce-4bec-a166-f129a6b295fc');
+
+--tb_image
+INSERT INTO tb_category (code, name, created_at, status) VALUES ('be6caa0c-00b2-4456-90e0-612e005810d1', 'Estudos', now(), 'ENABLED');
