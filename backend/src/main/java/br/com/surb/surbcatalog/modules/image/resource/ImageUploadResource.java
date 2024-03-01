@@ -1,9 +1,8 @@
 package br.com.surb.surbcatalog.modules.image.resource;
 
 import br.com.surb.surbcatalog.modules.image.entities.Image;
+import br.com.surb.surbcatalog.modules.image.mapper.ImageMapper;
 import br.com.surb.surbcatalog.modules.image.service.ImageUploadService;
-import br.com.surb.surbcatalog.shared.AppEnums.ImageExtensionType;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -39,15 +37,10 @@ public class ImageUploadResource {
             @RequestParam("name") String name,
             @RequestParam("tags") List<String> tags
     ) throws IOException {
-        Image image = Image.builder()
-                .name(name)
-                .tags(String.join(",", tags))
-                .size(file.getSize())
-                .extension(ImageExtensionType.valueOf(MediaType.valueOf(Objects.requireNonNull(file.getContentType()))))
-                .file(file.getBytes())
-                .build();
-        imageCreateService.execute(image);
+        Image image = ImageMapper.mapperToImage(file, name, tags);
+
+        Image newImage = imageCreateService.execute(image);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{imageId}").buildAndExpand(image.getImageId()).toUri();
-        return supplyAsync(() -> image, executor).thenApply((category) -> ResponseEntity.created(uri).body(image));
+        return supplyAsync(() -> image, executor).thenApply((__) -> ResponseEntity.created(uri).body(newImage));
     }
 }

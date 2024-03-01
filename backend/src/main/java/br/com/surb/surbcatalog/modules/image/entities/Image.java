@@ -3,10 +3,6 @@ package br.com.surb.surbcatalog.modules.image.entities;
 import br.com.surb.surbcatalog.shared.AppEnums.ImageExtensionType;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,11 +10,6 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "tb_image")
 public class Image implements Serializable {
@@ -56,6 +47,21 @@ public class Image implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private OffsetDateTime updatedAt;
 
+    public Image() {
+    }
+
+    public Image(UUID imageId, String name, Long size, ImageExtensionType extension, String tags, byte[] file, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+        this.imageId = imageId;
+        this.name = name;
+        this.size = size;
+        this.extension = extension;
+        this.tags = tags;
+        this.file = file;
+        this.active = active;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @PrePersist
     public void prePersist() {
         if (Objects.isNull(createdAt)) {
@@ -67,9 +73,85 @@ public class Image implements Serializable {
         }
     }
 
+    public UUID getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(UUID imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public ImageExtensionType getExtension() {
+        return extension;
+    }
+
+    public void setExtension(ImageExtensionType extension) {
+        this.extension = extension;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @PreUpdate
     public void preUpdate() {
         updatedAt = AppDateUtils.now();
+    }
+
+    public String getFileName(){
+        return getName().concat(".").concat(getExtension().name());
     }
 
     @Override

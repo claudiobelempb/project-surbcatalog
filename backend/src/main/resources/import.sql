@@ -62,5 +62,5 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES ('66c6f671-c2e1
 --INSERT INTO tb_product_category (product_id, category_id) VALUES ('51db1297-5173-4f3d-a327-478c0101aee4', 'edbab41d-80ce-4bec-a166-f129a6b295fc');
 
 --tb_image
-INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active) VALUES ('31a451c0-7ce4-46b7-af65-091e1867e082', 'image 01', 'PNG', 'teste', 1000L, now(), 1);
-INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active) VALUES ('73c1d16c-7c8e-442e-9432-62bfbc5e17fd', 'image 02', 'JPG', 'teste', 1000L, now(), 1);
+INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active, file) VALUES ('31a451c0-7ce4-46b7-af65-091e1867e082', 'image 01', 'PNG', 'teste-01', 1000L, now(), 1, null);
+INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active, file) VALUES ('73c1d16c-7c8e-442e-9432-62bfbc5e17fd', 'image 02', 'JPEG', 'teste-02', 1000L, now(), 1, null);

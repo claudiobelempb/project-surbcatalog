@@ -28,7 +28,7 @@ public class AppUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<UserDetailsPojection> user = userRepository.seachUserAndRolesByEmail(username, true);
-        System.out.println("USER =>" + user);
+//        System.out.println("USER =>" + user);
 
         if (user.isEmpty()) {
             logger.error(AppExceptionConstants.USER_NOT_FOUND + username);

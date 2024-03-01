@@ -31,6 +31,6 @@ public class CategoryCreateResource {
     public CompletableFuture<ResponseEntity<CategoryDTO>> handle(@Valid @RequestBody CategoryDTO dto) {
         CategoryDTO categoryDTO = categoryCreateService.execute(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{categoryId}").buildAndExpand(categoryDTO.getCategoryId()).toUri();
-        return supplyAsync(() -> categoryDTO, executor).thenApply((category) -> ResponseEntity.created(uri).body(categoryDTO));
+        return supplyAsync(() -> categoryDTO, executor).thenApply((__) -> ResponseEntity.created(uri).body(categoryDTO));
     }
 }
