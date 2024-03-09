@@ -20,7 +20,7 @@ public class RoleActiveService {
     }
 
     @Transactional
-    public void execute(UUID roleId){
+    public void execute(String roleId){
         Objects.requireNonNull(roleId);
         Role entity = roleRepository
                 .findByRoleIdAndActive(roleId, false)

@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public record AllocationUpdateDTO(
-        UUID allocationId,
+        String allocationId,
         String subject,
         OffsetDateTime startAt,
         OffsetDateTime endAt,
@@ -14,7 +14,7 @@ public record AllocationUpdateDTO(
         OffsetDateTime updatedAt,
         Boolean active,
         UUID roomId,
-        UUID userId
+        String userId
 ) implements Serializable {
 
     @Serial

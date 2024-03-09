@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public record AllocationCreateDTO(
-        UUID allocationId,
+        String allocationId,
         String subject,
         OffsetDateTime startAt,
         OffsetDateTime endAt,
@@ -14,7 +14,7 @@ public record AllocationCreateDTO(
         OffsetDateTime updatedAt,
         Boolean active,
         UUID roomId,
-        UUID userId
+        String userId
 ) implements Serializable {
     @Serial
     private static final long serialVersionUID = 1310548806333466741L;

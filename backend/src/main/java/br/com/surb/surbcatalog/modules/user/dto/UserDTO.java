@@ -21,8 +21,8 @@ public class UserDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -5908003197666529037L;
 
-    private UUID userId;
-    private UUID apiKey;
+    private String userId;
+    private String apiKey;
     @NotBlank(message = AppValidatorConstants.REQUIRED_FIELD)
     @Size(min = 5, max = 60, message = AppValidatorConstants.MIN_MAX)
     private String firstName;
@@ -40,7 +40,7 @@ public class UserDTO implements Serializable {
     public UserDTO() {
     }
 
-    public UserDTO(UUID userId, UUID apiKey, String firstName, String lastName, String email, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public UserDTO(String userId, String apiKey, String firstName, String lastName, String email, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.userId = userId;
         this.apiKey = apiKey;
         this.firstName = firstName;
@@ -60,22 +60,22 @@ public class UserDTO implements Serializable {
         active = entity.getActive();
         createdAt = entity.getCreatedAt();
         updatedAt = entity.getUpdatedAt();
-        entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
+        entity.getRoles().forEach(role -> this.roles.add(RoleDTO.builder().roleId(role.getRoleId()).authority(role.getAuthority()).build()));
     }
 
-    public UUID getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public UUID getApiKey() {
+    public String getApiKey() {
         return apiKey;
     }
 
-    public void setApiKey(UUID apiKey) {
+    public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
 

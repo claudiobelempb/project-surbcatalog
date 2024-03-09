@@ -4,6 +4,10 @@ import br.com.surb.surbcatalog.modules.room.entities.Room;
 import br.com.surb.surbcatalog.modules.user.entities.User;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +16,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_allocation")
 public class Allocation implements Serializable {
@@ -23,7 +31,7 @@ public class Allocation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID allocationId;
+    private String allocationId;
     private String subject;
 
     private OffsetDateTime startAt;
@@ -39,57 +47,6 @@ public class Allocation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Allocation() {
-    }
-
-    private Allocation(Builder builder) {
-        allocationId = builder.allocationId;
-        subject = builder.subject;
-        startAt = builder.startAt;
-        endAt = builder.endAt;
-        createdAt = builder.createdAt;
-        updatedAt = builder.updatedAt;
-        active = builder.active;
-        room = builder.room;
-        user = builder.user;
-    }
-
-    public UUID getAllocationId() {
-        return allocationId;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public OffsetDateTime getStartAt() {
-        return startAt;
-    }
-
-    public OffsetDateTime getEndAt() {
-        return endAt;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public User getUser() {
-        return user;
-    }
 
     @PrePersist
     public void prePersist() {
@@ -129,73 +86,5 @@ public class Allocation implements Serializable {
                 ", room=" + room +
                 ", user=" + user +
                 '}';
-    }
-
-    public static Builder newBuilder() {
-        return new Builder();
-    }
-
-    public static final class Builder {
-        private UUID allocationId;
-        private String subject;
-        private OffsetDateTime startAt;
-        private OffsetDateTime endAt;
-        private OffsetDateTime createdAt;
-        private OffsetDateTime updatedAt;
-        private Boolean active;
-        private Room room;
-        private User user;
-
-        private Builder() {
-        }
-
-        public Builder allocationId(UUID allocationId) {
-            this.allocationId = allocationId;
-            return this;
-        }
-
-        public Builder subject(String subject) {
-            this.subject = subject;
-            return this;
-        }
-
-        public Builder startAt(OffsetDateTime startAt) {
-            this.startAt = startAt;
-            return this;
-        }
-
-        public Builder endAt(OffsetDateTime endAt) {
-            this.endAt = endAt;
-            return this;
-        }
-
-        public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        public Builder active(Boolean active) {
-            this.active = active;
-            return this;
-        }
-
-        public Builder room(Room room) {
-            this.room = room;
-            return this;
-        }
-
-        public Builder user(User user) {
-            this.user = user;
-            return this;
-        }
-
-        public Allocation build() {
-            return new Allocation(this);
-        }
     }
 }

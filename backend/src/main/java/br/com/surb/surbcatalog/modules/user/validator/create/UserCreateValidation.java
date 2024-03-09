@@ -29,14 +29,6 @@ public class UserCreateValidation implements ConstraintValidator<UserCreateValid
     public boolean isValid(UserCreateDTO dto, ConstraintValidatorContext context) {
         List<AppValidFieldMessage> appValidFieldMessages = new ArrayList<>();
 
-//        userRepository
-//                .findByFirstNameAndActive(dto.getFirstName(), true)
-//                .ifPresent(user -> {
-//                    if (!Objects.isNull(dto.getFirstName())) {
-//                        appValidFieldMessages.add(new AppValidFieldMessage("firstName", dto.getFirstName() + AppValidatorConstants.NAME_EXIST));
-//                    }
-//                });
-
         userRepository
                 .findByEmailAndActive(dto.getEmail(), true)
                 .ifPresent(user -> {

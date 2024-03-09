@@ -25,7 +25,7 @@ public class UserDeleteResource {
 
     @DeleteMapping(value = "/{userId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId ) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String userId ) {
         return CompletableFuture
                 .runAsync(() -> userDeleteService.execute(userId), executor)
                 .thenApply((__) -> ResponseEntity.noContent().build());

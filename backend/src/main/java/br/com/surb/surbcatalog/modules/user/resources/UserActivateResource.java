@@ -25,7 +25,7 @@ public class UserActivateResource {
 
     @PatchMapping(value = "/activate/{userId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String userId) {
         return CompletableFuture
                 .runAsync(() -> userActivateService.execute(userId), executor)
                 .thenApply((r) -> ResponseEntity.noContent().build());

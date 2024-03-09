@@ -24,7 +24,7 @@ public class RoleDeleteResource {
     }
 
     @DeleteMapping(value = "/{roleId}")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID roleId ) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String roleId ) {
         return CompletableFuture
                 .runAsync(() -> roleDeleteService.execute(roleId), executor)
                 .thenApply((__) -> ResponseEntity.noContent().build());

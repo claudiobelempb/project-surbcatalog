@@ -21,11 +21,11 @@ public class RoleFindByIdService {
     }
 
     @Transactional(readOnly = true)
-    public RoleDTO execute(UUID roleId){
+    public RoleDTO execute(String roleId){
         Objects.requireNonNull(roleId);
         Role entity = roleRepository
                 .findByRoleIdAndActive(roleId, true)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.NOT_FOUND + roleId));
-        return new RoleDTO(entity, entity.getUsers());
+        return RoleDTO.builder().roleId(entity.getRoleId()).authority(entity.getAuthority()).build();
     }
 }

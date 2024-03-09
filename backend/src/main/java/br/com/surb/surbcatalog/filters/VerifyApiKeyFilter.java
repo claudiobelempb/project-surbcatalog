@@ -34,14 +34,14 @@ public class VerifyApiKeyFilter extends GenericFilterBean {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         String userId = httpRequest.getHeader(HEADER_API_KEY);
-        if (!StringUtils.isBlank(userId) && isValidApiKey(UUID.nameUUIDFromBytes(userId.getBytes()))) {
+        if (!StringUtils.isBlank(userId) && isValidApiKey(userId)) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             sendUnauthorizedError(httpResponse, String.valueOf(userId));
         }
     }
 
-    private boolean isValidApiKey(UUID userId) {
+    private boolean isValidApiKey(String userId) {
         return userRepository
                 .findById(userId)
                 .filter((u) -> u.getActive())

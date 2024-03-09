@@ -27,7 +27,7 @@ public class RoleFindByIdResource {
     }
 
     @GetMapping(value = "/{roleId}")
-    public CompletableFuture<ResponseEntity<RoleDTO>> handle(@PathVariable UUID roleId) {
+    public CompletableFuture<ResponseEntity<RoleDTO>> handle(@PathVariable String roleId) {
         Objects.isNull(roleId);
         return supplyAsync(() -> roleFindByIdService.execute(roleId), executor).thenApply((role) -> ResponseEntity.ok().body(role));
     }

@@ -14,6 +14,8 @@ import br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsService.AppEntity
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class AllocationCreateService {
     private final AllocationRepository allocationRepository;
@@ -38,14 +40,14 @@ public class AllocationCreateService {
     @Transactional
     public AllocationCreateDTO execute(AllocationCreateDTO dto) {
         roomRepository
-                .findById(dto.allocationId())
+                .findById(UUID.fromString(dto.allocationId()))
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "RoomId " + dto.roomId()));
         userRepository
                 .findById(dto.allocationId())
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + "UserId " + dto.userId()));
 
         allocationCreateValidator.validate(dto);
-        Allocation entity = Allocation.newBuilder().allocationId(dto.allocationId()).build();
+        Allocation entity = Allocation.builder().allocationId(dto.allocationId()).build();
         allocationRepository.save(entity);
         //allocationNotificationService.notifyAllocationCreate(entity);
         return AllocationCreateMapper.fromDTO(entity);

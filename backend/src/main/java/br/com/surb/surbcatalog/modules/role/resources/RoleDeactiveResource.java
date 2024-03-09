@@ -23,7 +23,7 @@ public class RoleDeactiveResource {
     }
 
     @PatchMapping(value = "/deactivate/{roleId}")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID roleId) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String roleId) {
         return CompletableFuture
                 .runAsync(() -> roleDeactiveService.execute(roleId), executor)
                 .thenApply((result) -> ResponseEntity.noContent().build());

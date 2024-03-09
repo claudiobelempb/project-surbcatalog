@@ -23,7 +23,7 @@ public class RoleUpdateResource {
     }
 
     @PutMapping(value = "/{roleId}")
-    public CompletableFuture<ResponseEntity<RoleDTO>> handle(@PathVariable UUID roleId, @RequestBody RoleDTO dto) {
+    public CompletableFuture<ResponseEntity<RoleDTO>> handle(@PathVariable String roleId, @RequestBody RoleDTO dto) {
         return supplyAsync(() -> roleUpdateService.execute(roleId, dto), executor).thenApply((role) -> ResponseEntity.ok().body(role));
 //        return CompletableFuture
 //                .runAsync(() -> roleUpdateService.execute(roleId, dto), executor)

@@ -79,17 +79,14 @@ public class AllocationCreateMapper {
             return null;
         }
 
-        Allocation.Builder entity = Allocation.newBuilder();
+        return Allocation.builder()
+        .allocationId(dto.allocationId())
+        .subject(dto.subject())
+        .startAt(dto.startAt())
+        .endAt(dto.endAt())
+        .active(dto.active())
+        .createdAt(dto.createdAt())
+        .updatedAt(dto.updatedAt()).build();
 
-        entity.allocationId(dto.allocationId());
-        entity.subject(dto.subject());
-        entity.startAt(dto.startAt());
-        entity.endAt(dto.endAt());
-        entity.active(dto.active());
-        entity.createdAt(dto.createdAt());
-        entity.updatedAt(dto.updatedAt());
-        entity.room(Room.newBuilder().roomId(dto.roomId()).build());
-
-        return entity.build();
     }
 }

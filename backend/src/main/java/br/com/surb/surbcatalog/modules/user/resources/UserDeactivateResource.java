@@ -25,7 +25,7 @@ public class UserDeactivateResource {
 
     @PatchMapping(value = "/deactivate/{userId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String userId) {
         return CompletableFuture
                 .runAsync(() -> userDeactivateService.execute(userId), executor)
                 .thenApply((result) -> ResponseEntity.noContent().build());

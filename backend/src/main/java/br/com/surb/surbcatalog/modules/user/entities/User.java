@@ -3,7 +3,6 @@ package br.com.surb.surbcatalog.modules.user.entities;
 import br.com.surb.surbcatalog.modules.role.entities.Role;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,8 +20,8 @@ public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID userId;
-    private UUID apiKey;
+    private String userId;
+    private String apiKey;
     private String firstName;
     private String lastName;
     @Column(unique = true)
@@ -41,7 +40,7 @@ public class User implements Serializable, UserDetails {
     public User() {
     }
 
-    public User(UUID userId, UUID apiKey, String firstName, String lastName, String email, String password, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
+    public User(String userId, String apiKey, String firstName, String lastName, String email, String password, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.userId = userId;
         this.apiKey = apiKey;
         this.firstName = firstName;
@@ -53,19 +52,19 @@ public class User implements Serializable, UserDetails {
         this.updatedAt = updatedAt;
     }
 
-    public UUID getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(UUID userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public UUID getApiKey() {
+    public String getApiKey() {
         return apiKey;
     }
 
-    public void setApiKey(UUID apiKey) {
+    public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
 
@@ -129,9 +128,19 @@ public class User implements Serializable, UserDetails {
         roles.add(role);
     }
 
+    public boolean hasRole(String roleName) {
+        for (Role role : roles) {
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @PrePersist
     public void prePersist() {
-        apiKey = UUID.randomUUID();
+        userId = String.valueOf(UUID.randomUUID());
+        apiKey = String.valueOf(UUID.randomUUID());
         createdAt = AppDateUtils.now();
         updatedAt = createdAt;
         active = true;
@@ -189,19 +198,4 @@ public class User implements Serializable, UserDetails {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", apiKey=" + apiKey +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", active=" + active +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", roles=" + roles +
-                '}';
-    }
 }

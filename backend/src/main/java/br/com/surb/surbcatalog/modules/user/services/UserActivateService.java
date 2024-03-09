@@ -18,7 +18,7 @@ public class UserActivateService {
     }
 
     @Transactional
-    public void execute(UUID userId) {
+    public void execute(String userId) {
         Objects.requireNonNull(userId);
         userRepository
                 .findByUserIdAndActive(userId, false)

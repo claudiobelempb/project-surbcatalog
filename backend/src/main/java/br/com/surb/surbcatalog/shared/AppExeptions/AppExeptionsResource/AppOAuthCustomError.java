@@ -2,7 +2,14 @@ package br.com.surb.surbcatalog.shared.AppExeptions.AppExeptionsResource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AppOAuthCustomError {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class AppOAuthCustomError implements Serializable {
+
+  @Serial
+  private static final long serialVersionUID = -5189706642489889209L;
+
   private String error;
 
   @JsonProperty("error_description")

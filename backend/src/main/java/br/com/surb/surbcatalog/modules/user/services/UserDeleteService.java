@@ -23,7 +23,7 @@ public class UserDeleteService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public void execute(UUID userId) {
+    public void execute(String userId) {
         try {
             Objects.requireNonNull(userId);
             userRepository.findByUserIdAndActive(userId, true)

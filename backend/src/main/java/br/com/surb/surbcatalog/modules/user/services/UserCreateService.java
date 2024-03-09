@@ -27,7 +27,7 @@ public class UserCreateService {
     @Transactional
     public UserDTO execute(UserCreateDTO dto) {
         User entiry = new User();
-        entiry.setPassword(passwordEncoder.encode(dto.getPassword()));
+        entiry.setPassword(encodedPassword(dto.getPassword()));
         copyDtoToEntity(dto, entiry);
         userRepository.save(entiry);
         return new UserDTO(entiry);
@@ -43,5 +43,9 @@ public class UserCreateService {
             Role role = roleRepository.getReferenceById(roleDTO.getRoleId());
             entity.getRoles().add(role);
         }
+    }
+
+    private String encodedPassword(String password){
+        return passwordEncoder.encode(password);
     }
 }

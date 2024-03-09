@@ -20,6 +20,6 @@ public class RoleFindAllService {
     @Transactional(readOnly = true)
     public Page<RoleDTO> execute(Pageable pageable) {
         Page<Role> roles = roleRepository.findAll(pageable);
-        return roles.map((role) -> new RoleDTO(role));
+        return roles.map((role) -> RoleDTO.builder().roleId(role.getRoleId()).authority(role.getAuthority()).build());
     }
 }

@@ -18,7 +18,7 @@ public class UserDeactivateService {
     }
 
     @Transactional
-    public void execute(UUID userId) {
+    public void execute(String userId) {
         Objects.requireNonNull(userId);
         userRepository.findByUserIdAndActive(userId, true)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + userId));

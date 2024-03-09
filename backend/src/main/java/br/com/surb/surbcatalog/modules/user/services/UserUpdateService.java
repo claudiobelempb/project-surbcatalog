@@ -28,7 +28,7 @@ public class UserUpdateService {
     }
 
     @Transactional
-    public UserDTO execute(UUID userId, UserUpdateDTO dto) {
+    public UserDTO execute(String userId, UserUpdateDTO dto) {
         try {
             Objects.requireNonNull(userId);
             User entiry = userRepository

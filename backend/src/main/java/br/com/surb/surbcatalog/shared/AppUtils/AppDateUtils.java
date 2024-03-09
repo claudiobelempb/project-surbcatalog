@@ -1,7 +1,9 @@
 package br.com.surb.surbcatalog.shared.AppUtils;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
+import java.util.Date;
+
+import static java.time.ZoneId.systemDefault;
 
 public final class AppDateUtils {
 
@@ -20,5 +22,10 @@ public final class AppDateUtils {
     ){
         return start.isBefore(newEnd) && end.isAfter(newStart);
         //return start.compareTo(newEnd) < 0 && end.compareTo(newStart) > 0;
+    }
+
+    public static Date generateExpirationDate(int expirationMinutes){
+        LocalDateTime now = LocalDateTime.now().plusMinutes(expirationMinutes);
+        return Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

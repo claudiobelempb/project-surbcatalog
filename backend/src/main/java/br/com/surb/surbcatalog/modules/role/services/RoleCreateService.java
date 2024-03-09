@@ -20,6 +20,6 @@ public class RoleCreateService {
         Role role = new Role();
         role.setAuthority(roleDTO.getAuthority());
         roleRepository.save(role);
-        return new RoleDTO(role);
+        return RoleDTO.builder().roleId(role.getRoleId()).authority(role.getAuthority()).build();
     }
 }

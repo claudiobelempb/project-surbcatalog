@@ -20,7 +20,7 @@ public class RoleDeleteService {
     }
 
     @Transactional
-    public void execute(UUID roleId) {
+    public void execute(String roleId) {
         try {
             roleRepository.delete(roleId);
         } catch (EmptyResultDataAccessException e) {

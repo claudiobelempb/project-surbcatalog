@@ -20,7 +20,7 @@ public class UserFindByIdService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO execute(UUID userId) {
+    public UserDTO execute(String userId) {
         Objects.requireNonNull(userId);
         User entity = userRepository.findByUserIdAndActive(userId, true)
                 .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.NOT_FOUND + userId));

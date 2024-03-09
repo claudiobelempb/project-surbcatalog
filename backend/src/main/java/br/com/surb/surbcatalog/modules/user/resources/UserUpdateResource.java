@@ -24,7 +24,7 @@ public class UserUpdateResource {
 
     @PutMapping(value = "/{userId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID userId, @Valid @RequestBody UserUpdateDTO dto) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String userId, @Valid @RequestBody UserUpdateDTO dto) {
         return CompletableFuture
                 .runAsync(() -> userUpdateService.execute(userId, dto), executor)
                 .thenApply((__) -> ResponseEntity.noContent().build());

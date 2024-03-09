@@ -96,4 +96,10 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES ('40b302b2-31ff
 INSERT INTO tb_product_category (product_id, category_id) VALUES ('51db1297-5173-4f3d-a327-478c0101aee4', 'edbab41d-80ce-4bec-a166-f129a6b295fc');
 
 --tb_image
-INSERT INTO tb_category (code, name, created_at, status) VALUES ('be6caa0c-00b2-4456-90e0-612e005810d1', 'Estudos', now(), 'ENABLED');
+INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active) VALUES ('31a451c0-7ce4-46b7-af65-091e1867e082', 'image 01', 'PNG', 'teste', 1000L, now(), 1);
+INSERT INTO tb_image (image_id, name, extension, tags, size, created_at, active) VALUES ('73c1d16c-7c8e-442e-9432-62bfbc5e17fd', 'image 02', 'JPG', 'teste', 1000L, now(), 1);
+
+--tb_notification
+INSERT INTO tb_notification (notification_id, text, route, read, user_id, created_at, active) VALUES ('73c1d16c-7c8e-442e-9432-62bfbc5e17fd', 'text 01', 'http://localhost:8080/api/v1', 1, 'd477f8ca-ff5b-4eff-a66e-fd83b102371b',  now(), 1);
+INSERT INTO tb_notification (notification_id, text, route, read, user_id, created_at, active) VALUES ('84801e32-11cb-4a84-9d4f-7da1b4388932', 'text 02', 'http://localhost:8080/api/v1', 1, 'd477f8ca-ff5b-4eff-a66e-fd83b102371b',  now(), 1);
+INSERT INTO tb_notification (notification_id, text, route, read, user_id, created_at, active) VALUES ('22547931-0894-421a-8e48-0e0d9771e662', 'text 03', 'http://localhost:8080/api/v1', 1, '84794b77-dd91-4050-9831-7de6007d103e',  now(), 1);

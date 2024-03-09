@@ -3,6 +3,10 @@ package br.com.surb.surbcatalog.modules.role.entities;
 import br.com.surb.surbcatalog.modules.user.entities.User;
 import br.com.surb.surbcatalog.shared.AppUtils.AppDateUtils;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serial;
@@ -10,6 +14,10 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_role")
 public class Role implements Serializable, GrantedAuthority {
@@ -19,7 +27,7 @@ public class Role implements Serializable, GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID roleId;
+    private String roleId;
     @Column(unique = true)
     private String authority;
     private Boolean active;
@@ -29,29 +37,11 @@ public class Role implements Serializable, GrantedAuthority {
     @ManyToMany(mappedBy = "roles")
     private final Set<User> users = new HashSet<>();
 
-    public Role() {
-    }
-
-    public Role(UUID roleId, String authority, Boolean active, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
-        this.roleId = roleId;
-        this.authority = authority;
-        this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public Role(UUID roleId, String authoriry) {
+    public Role(String roleId, String authoriry) {
         this.roleId = roleId;
         this.authority = authoriry;
     }
 
-    public UUID getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(UUID roleId) {
-        this.roleId = roleId;
-    }
 
     @Override
     public String getAuthority() {
@@ -62,36 +52,10 @@ public class Role implements Serializable, GrantedAuthority {
         this.authority = authority;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
 
     @PrePersist
     public void prePersist() {
+        roleId = String.valueOf(UUID.randomUUID());
         createdAt = AppDateUtils.now();
         updatedAt = createdAt;
         active = true;

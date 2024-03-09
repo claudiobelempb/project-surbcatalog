@@ -23,7 +23,7 @@ public class RoleActiveResource {
     }
 
     @PatchMapping(value = "/activate/{roleId}")
-    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable UUID roleId) {
+    public CompletableFuture<ResponseEntity<Void>> handle(@PathVariable String roleId) {
         return CompletableFuture
                 .runAsync(() -> roleActiveService.execute(roleId), executor)
                 .thenApply((__) -> ResponseEntity.noContent().build());

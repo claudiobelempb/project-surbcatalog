@@ -21,7 +21,7 @@ public class RoleUpdateService {
     }
 
     @Transactional
-    public RoleDTO execute(UUID roleId, RoleDTO dto) {
+    public RoleDTO execute(String roleId, RoleDTO dto) {
         try {
             Objects.requireNonNull(roleId);
             Role entity = roleRepository
@@ -29,7 +29,7 @@ public class RoleUpdateService {
                     .orElseThrow(() -> new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + roleId));
             entity.setAuthority(dto.getAuthority());
             entity = roleRepository.save(entity);
-            return new RoleDTO(entity);
+            return RoleDTO.builder().roleId(entity.getRoleId()).authority(entity.getAuthority()).build();
         } catch (EntityNotFoundException e) {
             throw new AppEntityNotFoundException(AppExceptionConstants.ENTITY_NOT_FOUND + roleId);
         }
