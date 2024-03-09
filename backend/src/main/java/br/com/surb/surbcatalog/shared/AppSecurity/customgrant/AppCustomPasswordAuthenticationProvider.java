@@ -1,12 +1,13 @@
 package br.com.surb.surbcatalog.shared.AppSecurity.customgrant;
 
+import br.com.surb.surbcatalog.modules.user.entities.User;
 import br.com.surb.surbcatalog.modules.user.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
@@ -35,6 +36,8 @@ public class AppCustomPasswordAuthenticationProvider implements AuthenticationPr
 //    private final OAuth2RefreshTokenGenerator refreshTokenGenerator;
     private final PasswordEncoder passwordEncoder;
 
+    private static final Logger logger = LoggerFactory.getLogger(AppCustomPasswordAuthenticationProvider.class);
+
     public AppCustomPasswordAuthenticationProvider(
             OAuth2AuthorizationService authorizationService,
             OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
@@ -60,16 +63,14 @@ public class AppCustomPasswordAuthenticationProvider implements AuthenticationPr
         AppCustomPasswordAuthenticationToken customPasswordAuthenticationToken = (AppCustomPasswordAuthenticationToken) authentication;
         OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(customPasswordAuthenticationToken);
         RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-        String userId = customPasswordAuthenticationToken.getUserId();
         String username = customPasswordAuthenticationToken.getUsername();
-        String firstName = customPasswordAuthenticationToken.getFirstName();
         String password = customPasswordAuthenticationToken.getPassword();
 
-        System.out.println(userId + username + firstName + password);
+        User user = null;
 
-        UserDetails user = null;
         try {
-            user = userDetailsService.loadUserByUsername(username);
+            user = (User) userDetailsService.loadUserByUsername(username);
+            logger.info("Last Name => " + user.getLastName());
         } catch (UsernameNotFoundException e) {
             throw new OAuth2AuthenticationException("Invalid credentials");
         }
@@ -85,7 +86,7 @@ public class AppCustomPasswordAuthenticationProvider implements AuthenticationPr
 
         //-----------Create a new Security Context Holder Context----------
         OAuth2ClientAuthenticationToken oAuth2ClientAuthenticationToken = (OAuth2ClientAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        AppCustomUserAuthorities customPasswordUser = new AppCustomUserAuthorities(userId, username, firstName, user.getAuthorities());
+        AppCustomUserAuthorities customPasswordUser = new AppCustomUserAuthorities(user.getUserId(), username, user.getFirstName(), user.getLastName(), user.getAuthorities());
         oAuth2ClientAuthenticationToken.setDetails(customPasswordUser);
 
         var newcontext = SecurityContextHolder.createEmptyContext();

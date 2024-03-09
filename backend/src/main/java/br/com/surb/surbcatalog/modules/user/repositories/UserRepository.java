@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -21,18 +20,19 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByEmailAndActive(String email, Boolean active);
 
     /*
-    SELECT  tb_user.email AS username, tb_user.password, tb_role.role_id, tb_role.authority
+    SELECT  tb_user.email AS username, tb_user.first_name AS FirstName,  tb_user.last_name AS LastName, tb_user.password, tb_role.role_id, tb_role.authority
     FROM tb_user
     INNER JOIN tb_user_role ON tb_user.user_id = tb_user_role.user_id
     INNER JOIN tb_role ON tb_role.role_id = tb_user_role.role_id
     WHERE tb_user.email = 'claudio.c.lima@hotmail.com' AND tb_user.active = true
     */
-    @Query(nativeQuery = true, value = "SELECT tb_user.user_id AS userId, tb_user.first_name AS firstName, tb_user.email AS username, tb_user.password, tb_role.role_id AS roleId, tb_role.authority " +
-            "    FROM tb_user " +
-            "    INNER JOIN tb_user_role ON tb_user.user_id = tb_user_role.user_id " +
-            "    INNER JOIN tb_role ON tb_role.role_id = tb_user_role.role_id " +
-            "    WHERE tb_user.email = :email AND tb_user.active = :active")
-    List<UserDetailsPojection> seachUserAndRolesByEmailAndActive(String email, Boolean active);
+    @Query(nativeQuery = true, value =
+            "SELECT  tb_user.user_id AS UserId, tb_user.first_name AS FirstName, tb_user.last_name AS LastName, tb_user.email AS username, tb_user.password, tb_role.role_id AS RoleId, tb_role.authority " +
+                    "    FROM tb_user " +
+                    "    INNER JOIN tb_user_role ON tb_user.user_id = tb_user_role.user_id " +
+                    "    INNER JOIN tb_role ON tb_role.role_id = tb_user_role.role_id " +
+                    "    WHERE tb_user.email = :email AND tb_user.active = :active")
+    List<UserDetailsPojection> searchUserAndRolesByEmailAndActive(String email, Boolean active);
 
     Optional<User> findByFirstNameAndActive(String firstName, Boolean active);
 

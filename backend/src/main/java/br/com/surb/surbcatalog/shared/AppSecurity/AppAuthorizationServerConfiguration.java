@@ -5,13 +5,14 @@ import br.com.surb.surbcatalog.shared.AppSecurity.customgrant.AppCustomPasswordA
 import br.com.surb.surbcatalog.shared.AppSecurity.customgrant.AppCustomPasswordAuthenticationProvider;
 import br.com.surb.surbcatalog.shared.AppSecurity.customgrant.AppCustomUserAuthorities;
 import br.com.surb.surbcatalog.shared.AppSecurity.jwt.AppJwt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -53,6 +54,8 @@ public class AppAuthorizationServerConfiguration {
     private final UserService userDetailsService;
 
     private final AppJwt appJwt;
+
+    private static final Logger logger = LoggerFactory.getLogger(AppAuthorizationServerConfiguration.class);
 
     public AppAuthorizationServerConfiguration(PasswordEncoder passwordEncoder, UserService userDetailsService, AppJwt appJwt) {
         this.passwordEncoder = passwordEncoder;
@@ -146,13 +149,19 @@ public class AppAuthorizationServerConfiguration {
         return context -> {
             OAuth2ClientAuthenticationToken principal = context.getPrincipal();
             AppCustomUserAuthorities user = (AppCustomUserAuthorities) principal.getDetails();
+            logger.info("User Fast Name =>>" + user.getFirstName());
+            logger.info("User Last Name =>>" + user.getLastName());
+            logger.info("User Name =>>" + user.getUsername());
+            logger.info("User Id =>>" + user.getUserId());
+            logger.info("Authority Name =>>" + user.getAuthorities());
             List<String> authorities = user.getAuthorities().stream().map(x -> x.getAuthority()).toList();
             if (context.getTokenType().getValue().equals("access_token")) {
                 // @formatter:off
                 context.getClaims()
                         .claim("userId", user.getUserId())
                         .claim("firstName", user.getFirstName())
-                        .claim("username", user.getUsername())
+                        .claim("lastName", user.getLastName())
+                        .claim("userName", user.getUsername())
                         .claim("authorities", authorities);
                 // @formatter:on
             }

@@ -5,6 +5,8 @@ public interface UserDetailsPojection {
 
     String getFirstName();
 
+    String getLastName();
+
     String getUsername();
 
     String getPassword();

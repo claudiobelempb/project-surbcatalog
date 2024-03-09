@@ -7,7 +7,10 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationGrantAuthenticationToken;
 
 import java.io.Serial;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Getter
 public class AppCustomPasswordAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
@@ -15,8 +18,6 @@ public class AppCustomPasswordAuthenticationToken extends OAuth2AuthorizationGra
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final String userId;
-    private final String firstName;
     private final String username;
     private final String password;
     private final Set<String> scopes;
@@ -30,8 +31,6 @@ public class AppCustomPasswordAuthenticationToken extends OAuth2AuthorizationGra
                 clientPrincipal,
                 additionalParameters
         );
-        this.userId = (String) additionalParameters.get("userId");
-        this.firstName = (String) additionalParameters.get("firstName");
         this.username = (String) additionalParameters.get("username");
         this.password = (String) additionalParameters.get("password");
         this.scopes = Collections.unmodifiableSet(

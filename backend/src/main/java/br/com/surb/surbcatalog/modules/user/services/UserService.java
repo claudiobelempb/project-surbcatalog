@@ -12,9 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -29,17 +27,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<UserDetailsPojection> result = userRepository.seachUserAndRolesByEmailAndActive(username, true);
-        for (UserDetailsPojection userDetailsPojection : result) {
-//            System.out.println("User Id => " + userDetailsPojection.getUserId());
-            logger.info("User Id => " + userDetailsPojection.getUserId());
-            logger.info("Email => " + userDetailsPojection.getUsername());
-            logger.info("Authority => " + userDetailsPojection.getAuthority());
-            logger.info("First Name => " + userDetailsPojection.getFirstName());
-            logger.info("Password => " + userDetailsPojection.getPassword());
-            logger.info("Role Id => " + userDetailsPojection.getRoleId());
-        }
-
+        List<UserDetailsPojection> result = userRepository.searchUserAndRolesByEmailAndActive(username, true);
         if (result.isEmpty()) {
             logger.error(AppExceptionConstants.USER_NOT_FOUND + username);
             throw new UsernameNotFoundException(AppExceptionConstants.EMAIL_NOT_FOUND + username);
@@ -48,11 +36,12 @@ public class UserService implements UserDetailsService {
         User entity = new User();
         entity.setUserId(result.get(0).getUserId());
         entity.setFirstName(result.get(0).getFirstName());
+        entity.setLastName(result.get(0).getLastName());
         entity.setEmail(result.get(0).getUsername());
         entity.setPassword(result.get(0).getPassword());
 
         for (UserDetailsPojection projection : result) {
-            entity.addRole(new Role(projection.getRoleId(), projection.getAuthority()));
+            entity.addRole(Role.builder().roleId(projection.getRoleId()).authority(projection.getAuthority()).build());
         }
 
         return entity;

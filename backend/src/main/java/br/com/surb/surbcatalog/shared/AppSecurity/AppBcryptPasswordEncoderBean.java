@@ -1,4 +1,4 @@
-package br.com.surb.surbcatalog.shared.AppBean;
+package br.com.surb.surbcatalog.shared.AppSecurity;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
