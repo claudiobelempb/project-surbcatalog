@@ -40,10 +40,10 @@ import java.util.UUID;
 
 @Configuration
 public class AppAuthorizationServerConfiguration {
-    @Value("${spring.security.client-id}")
+    @Value("${spring.security.oauth2.client.registration.OAuth2provider.client-id}")
     private String clientId;
 
-    @Value("${spring.security.client-secret}")
+    @Value("${spring.security.oauth2.client.registration.OAuth2provider..client-secret}")
     private String clientSecret;
 
     @Value("${spring.security.jwt.duration}")

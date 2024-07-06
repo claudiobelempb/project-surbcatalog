@@ -4,7 +4,6 @@ spring:
     password: ${PGPASSWORD}
     url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
     username: ${PGUSER}
-  environment: production
   jpa:
     hibernate:
       ddl-auto: validate

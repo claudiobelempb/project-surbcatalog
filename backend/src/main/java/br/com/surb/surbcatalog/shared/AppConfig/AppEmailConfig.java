@@ -21,7 +21,7 @@ public class AppEmailConfig {
         this.appEmailConfigProperties = appEmailConfigProperties;
     }
 
-    @Bean
+    /*@Bean
     public JavaMailSender javaMailSender() {
 
         JavaMailSenderImpl mailsend = new JavaMailSenderImpl();
@@ -36,6 +36,6 @@ public class AppEmailConfig {
         properties.put(PROPERTY_SMTP_STARTTLS_ENABLE, appEmailConfigProperties.getProperty(PROPERTY_SMTP_STARTTLS_ENABLE));
 
         return mailsend;
-    }
+    }*/
 
 }

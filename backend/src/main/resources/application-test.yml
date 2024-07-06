@@ -4,7 +4,6 @@ spring:
         password:
         url: jdbc:h2:mem:testdb
         username: sa
-    environment: test
     h2:
         console:
             enabled: true
@@ -13,15 +12,10 @@ spring:
                 trace: false
                 web-allow-others: false
     jpa:
-        database: H2
         properties:
-            ddl-auto: create
-            dialect: org.hibernate.dialect.H2Dialect
             hibernate:
-                format_sql: true
-                open-in-view: false
-        platform: h2
+            format_sql: true
+            ddl-auto: create
+        database: H2
+        openInView: false
         show-sql: false
-    sql:
-        init:
-            platform: h2

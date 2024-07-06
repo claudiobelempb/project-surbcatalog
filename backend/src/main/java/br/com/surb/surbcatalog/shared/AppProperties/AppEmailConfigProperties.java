@@ -4,13 +4,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Map;
 
-@ConfigurationProperties(prefix = "spring.email")
+@ConfigurationProperties(prefix = "spring.mail")
 public class AppEmailConfigProperties {
 
-    public static final String PROPERTY_TRANSPORT_PROTOCOL = "mail.transport.protocol";
-    public static final String PROPERTY_SMTP_PORT = "mail.smtp.port";
-    public static final String PROPERTY_SMTP_AUTH = "mail.smtp.auth";
-    public static final String PROPERTY_SMTP_STARTTLS_ENABLE = "mail.smtp.starttls.enable";
+    public static final String PROPERTY_TRANSPORT_PROTOCOL = "transport.protocol";
+    public static final String PROPERTY_SMTP_PORT = "smtp.port";
+    public static final String PROPERTY_SMTP_AUTH = "smtp.auth";
+    public static final String PROPERTY_SMTP_STARTTLS_ENABLE = "smtp.starttls.enable";
 
     private final String host;
     private final String username;

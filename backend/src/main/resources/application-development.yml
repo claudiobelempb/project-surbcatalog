@@ -4,7 +4,6 @@ spring:
     password: postgres
     url: jdbc:postgresql://localhost:5432/imagelite?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: postgres
-  environment: development
   jpa:
     datasource: POSTGRESQL
     propertites:

@@ -27,8 +27,8 @@ import java.util.Arrays;
 @EnableMethodSecurity
 public class AppResourceServerConfiguration {
 
-    @Value("${spring.cors.origins}")
-    private String corsOrigins;
+    //@Value("${spring.corsOrigins}")
+    //private String corsOrigins;
 
     @Bean
     @Profile("test")
@@ -65,10 +65,11 @@ public class AppResourceServerConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
-        String[] origins = corsOrigins.split(",");
+        //String[] origins = corsOrigins.split(",");
 
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOriginPatterns(Arrays.asList(origins));
+        //corsConfig.setAllowedOriginPatterns(Arrays.asList(origins));
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:3000","http://localhost:5173"));
         corsConfig.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "PATCH"));
         corsConfig.setAllowCredentials(true);
         corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));

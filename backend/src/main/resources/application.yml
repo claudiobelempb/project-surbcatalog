@@ -1,44 +1,59 @@
 server:
-  port: 8080
+  port: ${APP_PORT:8080}
   servlet:
-    contextPath: /api/v1
+    context-path: /api/v1
 spring:
+  config:
+    name: App Sales v2
   application:
     name: App Sales v2
-  config:
-    activate:
-      onProfile: ${SPRING_PROFILES_ACTIVE:test}
+  profiles:
+    active:
+      - ${SPRING_PROFILES_ACTIVE:test}
   mvc:
     pathmatch:
-      matchingStrategy: ANT_PATH_MATCHER
-  security:
-    jwt:
-      duration: ${JWT_DURATION:86400}
-    client-id: ${CLIENT_ID:myclientid}
-    client-secret: ${CLIENT_SECRET:myclientsecret}
-  cors:
-    origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
-  email:
-    host: smtp.mail.com
-    username: claudiocardo@gmail.com
-    passowrd: Lima123@
-    from: claudiocardo@gmail.com
-    properties:
-      mail.transport.protocol: smtp
-      mail.smtp.port: 587
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
+      matching-strategy: ANT_PATH_MATCHER
   servlet:
     multipart:
       max-file-size: ${MAX_FILE_SIZE:20}MB
       max-request-size: ${MAX_REQUEST_SIZE:20}MB
+  security:
+    oauth2:
+      client:
+        provider: OAuth2provider
+        registration:
+          OAuth2provider:
+            clientId: ${CLIENT_ID:myclientid}
+            clientSecret: ${CLIENT_SECRET:myclientsecret}
+
+
+    jwt:
+      duration: ${JWT_DURATION:86400}
+  #corsOrigins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+  mail:
+    host: smtp.mail.com
+    username: claudiocardo@gmail.com
+    password: Lima123@
+    #from: claudiocardo@gmail.com
+    protocol: smtp
+    properties:
+      - port: 587
+      - auth: true
+      - starttls: true
+
+
+
+
 # =================================
 # = Logging
 # =================================
 logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %thread ${PID} [%X{correlationId}] %-5level %logger{36} - %class{1} - %msg%n"
   level:
-    org.springframework: ERROR
-    org.flywaydb: ERROR
+    root: error
+    sql: error
+    web: error
 # =================================
 # = App Congig
 # =================================
